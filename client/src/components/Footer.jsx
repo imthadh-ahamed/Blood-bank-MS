@@ -1,9 +1,13 @@
 import React from 'react'
 
-function Footer() {
+function footer() {
   return (
-    <div>Footer</div>
+    <div className="p-3" style={{backgroundColor: 'black', color:'white'}}>
+        <h4 className="text-center">
+            All right reserved &copy; LMS
+        </h4>
+    </div>
   )
 }
 
-export default Footer
+export default footer
