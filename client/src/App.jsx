@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Signin from './pages/Signin'
 import Signup from './pages/Signup'
 import Donordashboard from './pages/Donordashboard'
+import Logout from './components/Logout'
 
 // App function definition
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <Route path="/" element={<Signin />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/donordashboard" element={<Donordashboard />} />
+      <Route path="/logoutpop" element={<Logout />} />
 
     </Routes>
     </BrowserRouter>

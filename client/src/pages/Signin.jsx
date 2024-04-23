@@ -63,7 +63,7 @@ function Signin() {
               alt="App Logo"
               className="w-32 mx-auto"
             />
-            <h2 className="text-2xl font-bold mt-4">Sign Up</h2>
+            <h2 className="text-2xl font-bold mt-4">Sign In</h2>
           </div>
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
