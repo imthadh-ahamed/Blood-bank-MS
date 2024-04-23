@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import userRoutes from './routes/userRoute.js'
 
 // Load environment variables from a .env file into process.env
 dotenv.config();
@@ -24,3 +25,5 @@ const app = express();
 app.listen(3000, () => {
   console.log("Server is running on PORT 3000!!!");     // Log a message when the server starts listening on port 3000
 });
+
+app.use('/api/user', userRoutes);
