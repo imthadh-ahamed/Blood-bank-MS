@@ -41,6 +41,10 @@ function Signup() {
         navigate("/"); // Navigate to home page
       }
     } catch (error) {
+      // Handle duplicate key error
+      if (error.message.includes("duplicate key error")) {
+        return setErrorMessage("An account with this email or username already exists.");
+      }
       setErrorMessage(error.message); // Set error message if an error occurs
       setLoading(false); // Set loading state to false
     }
