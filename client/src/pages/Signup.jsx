@@ -74,6 +74,7 @@ function Signup() {
                 placeholder="User Name"
                 id="username"
                 onChange={handleChange}
+                required
                 className="border-2 border-gray-300 rounded-md p-2 focus:outline-none focus:border-customRed"
               />
             </div>
@@ -86,6 +87,7 @@ function Signup() {
                 placeholder="name@gmail.com"
                 id="email"
                 onChange={handleChange}
+                required
                 className="border-2 border-gray-300 rounded-md p-2 focus:outline-none focus:border-customRed"
               />
             </div>
@@ -98,6 +100,7 @@ function Signup() {
                 placeholder="Password"
                 id="password"
                 onChange={handleChange}
+                required
                 className="border-2 border-gray-300 rounded-md p-2 focus:outline-none focus:border-customRed"
               />
             </div>
