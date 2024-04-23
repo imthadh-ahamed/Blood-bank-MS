@@ -5,6 +5,7 @@ import Signin from './pages/Signin'
 import Signup from './pages/Signup'
 import Donordashboard from './pages/Donordashboard'
 import Logout from './components/Logout'
+import PrivateRoute from './components/PrivateRoute'
 
 // App function definition
 function App() {
@@ -15,8 +16,12 @@ function App() {
     <Routes>
       <Route path="/" element={<Signin />} />
       <Route path="/signup" element={<Signup />} />
+
+      <Route element={<PrivateRoute />}>
       <Route path="/donordashboard" element={<Donordashboard />} />
       <Route path="/logoutpop" element={<Logout />} />
+      </Route>
+      
 
     </Routes>
     </BrowserRouter>

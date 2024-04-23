@@ -8,9 +8,13 @@ import { VscFeedback } from "react-icons/vsc"
 import { NavLink } from 'react-router-dom'
 
 function Sidebar({children}) {
+    // Define state variable to control sidebar opening/closing
     const[isOpen, setIsOpen] = useState(false);
+
+    // Function to toggle sidebar state
     const toggle = () => setIsOpen (!isOpen);
 
+    // Array of menu items with paths, names, and corresponding icons
     const menuItem = [
         {
             path: "/dashboard",
@@ -50,22 +54,32 @@ function Sidebar({children}) {
     ]
   return (
     <div className='container'>
+         {/* Sidebar container */}
         <div className="sidebar mr-2" style={{width: isOpen ? "200px" : "50px"}}>
+            {/* Top section of the sidebar */}
             <div className="top_section ml-2">
+                {/* Bars icon to toggle sidebar */}
                 <div className="bars" style={{marginLeft: isOpen ? "150px" : "0px"}}>
                     <FaBars onClick={toggle}/>
                 </div>
             </div>
+
+            {/* Navigation links */}
             {
+                 // Map through menu items and create NavLink for each item
                 menuItem.map((item, index) => (
                     <NavLink to={item.path} key={index} className="link" activeclassName="active">
+                        {/* Icon */}
                         <div className="icon">{item.icon}</div>
+
+                         {/* Link text */}
                         <div className="link_text" style={{display: isOpen ? "block" : "none"}}>{item.name}</div>
                     </NavLink>
                 ))
             }
             
         </div>
+        {/* Main content */}
         <main>{children}</main>
     </div>
   )
