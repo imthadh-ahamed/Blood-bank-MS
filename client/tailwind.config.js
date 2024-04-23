@@ -3,9 +3,16 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
+    'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        customRed: '#FE0944',
+        customApricot: '#FEAE96',
+        customlightRed: '#FF7878'
+      },
+    },
   },
-  plugins: [],
+  plugins: [require('flowbite/plugin')],
 }
