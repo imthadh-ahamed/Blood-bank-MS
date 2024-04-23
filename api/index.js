@@ -19,7 +19,7 @@ mongoose
     console.log(err);       // Log an error if MongoDB connection fails
   });
 
-  // Create an Express application
+// Create an Express application
 const app = express();
 
 // Middleware to parse JSON bodies of incoming requests
