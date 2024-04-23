@@ -1,12 +1,14 @@
 import { Label, TextInput, Button, Alert } from "flowbite-react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux'
+import { signInStart, signInSuccess, signInFailure } from "../redux/user/userSlice";
 
 function Signin() {
   // Define state variables using useState hook
   const [formData, setFormData] = useState({}); // State for form data
-  const [errorMessage, setErrorMessage] = useState(null); // State for error message
-  const [loading, setLoading] = useState(false); // State for loading indicator
+  const { loading, error: errorMessage } = useSelector(state => state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate(); // Use navigate hook from react-router-dom
 
   // Handle form input change
@@ -19,11 +21,10 @@ function Signin() {
     e.preventDefault(); // Prevent default form submission behavior
     if (!formData.email || !formData.password) {
       // Validate form fields
-      return setErrorMessage("Please fill out all fields."); // Set error message if fields are missing
+      return dispatch(signInFailure("Please fill out all fields.")); // Set error message if fields are missing
     }
     try {
-      setLoading(true); // Set loading state to true
-      setErrorMessage(null); // Clear any previous error message
+      dispatch(signInStart());
       const res = await fetch("/api/auth/signin", {
         // Make a POST request to signup endpoint
         method: "POST",
@@ -33,11 +34,11 @@ function Signin() {
       const data = await res.json(); // Parse response JSON
       // Check if signup was unsuccessful
       if (data.success === false) {
-        return setErrorMessage(data.message); // Set error message from response
+        dispatch(signInFailure(data.message));
       }
-      setLoading(false); // Set loading state to false
       // Check if request was successful
       if (res.ok) {
+        dispatch(signInSuccess(data));
         navigate("/donordashboard"); // Navigate to home page
       }
     } catch (error) {
@@ -47,8 +48,7 @@ function Signin() {
           "An account with this email or username already exists."
         );
       }
-      setErrorMessage(error.message); // Set error message if an error occurs
-      setLoading(false); // Set loading state to false
+      dispatch(signInFailure(error.message));
     }
   };
 
