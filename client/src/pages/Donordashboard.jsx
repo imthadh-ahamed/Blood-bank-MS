@@ -1,6 +1,7 @@
 import React from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
+import Footer from "../components/Footer"
 
 
 function Donordashboard() {
@@ -12,6 +13,7 @@ function Donordashboard() {
           <Sidebar />
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
