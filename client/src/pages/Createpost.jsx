@@ -30,7 +30,7 @@ function Createpost() {
       }
 
       if (res.ok) {
-        setPublishError(null);
+        // setPublishError(null);
         navigate('/postsuccess');
       }
     } catch (error) {

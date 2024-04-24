@@ -20,12 +20,12 @@ function App() {
     <Routes>
       <Route path="/" element={<Signin />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path='/postsuccess' element={<PostSuccess />} />
 
       <Route element={<PrivateRoute />}>
       <Route path="/donordashboard" element={<Donordashboard />} />
       <Route path="/viewblogs" element={<Viewblogs />} />
       <Route path="/logoutpop" element={<Logout />} />
-      <Route path='/postsuccess' element={<PostSuccess />} />
       </Route>
 
       <Route element={<OnlyAdmin />} >

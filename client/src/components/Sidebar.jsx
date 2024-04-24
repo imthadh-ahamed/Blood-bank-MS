@@ -42,7 +42,7 @@ function Sidebar({children}) {
             icon: <BiSolidDonateBlood />
         },
         {
-            path: "/feedback",
+            path: "/postsuccess",
             name: "Feedback",
             icon: <VscFeedback />
         },
