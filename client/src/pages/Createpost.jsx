@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
-import { Button, TextInput, Alert } from "flowbite-react";
+import { Button, TextInput, Alert, Textarea } from "flowbite-react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
@@ -33,7 +33,7 @@ function Createpost() {
         setPublishError(data.message || 'Failed to publish.');    // Setting publish error message if request fails
         return;
       }
-      navigate('/postsuccess');                                   // Redirecting to post success page if request succeeds
+      navigate("/postsuccess");                                   // Redirecting to post success page if request succeeds
     } catch (error) {
       setPublishError('Something went wrong');                    // Handling unexpected errors
     }
@@ -81,12 +81,11 @@ function Createpost() {
               />
 
               {/* Enter the blog body */}
-              <ReactQuill
-                theme="snow"
+              <Textarea
                 placeholder="Write something..."
                 required
                 value={content}
-                onChange={(value) => setContent(value)}
+                onChange={(e) => setContent(e.target.value)}
                 className="h-72 mb-12 bg-white rounded-xl"
               />
             </div>
