@@ -6,6 +6,9 @@ import Signup from './pages/Signup'
 import Donordashboard from './pages/Donordashboard'
 import Logout from './components/Logout'
 import PrivateRoute from './components/PrivateRoute'
+import Viewblogs from './pages/Viewblogs'
+import OnlyAdmin from './components/OnlyAdmin'
+import Addblogs from './pages/Addblogs'
 
 // App function definition
 function App() {
@@ -19,7 +22,12 @@ function App() {
 
       <Route element={<PrivateRoute />}>
       <Route path="/donordashboard" element={<Donordashboard />} />
+      <Route path="/viewblogs" element={<Viewblogs />} />
       <Route path="/logoutpop" element={<Logout />} />
+      </Route>
+
+      <Route element={<OnlyAdmin />} >
+        <Route path="/addblogs" element={<Addblogs />} />
       </Route>
       
 
