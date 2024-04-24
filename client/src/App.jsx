@@ -9,6 +9,7 @@ import PrivateRoute from './components/PrivateRoute'
 import Viewblogs from './pages/Viewblogs'
 import OnlyAdmin from './components/OnlyAdmin'
 import CreatePosts from './pages/Createpost'
+import PostSuccess from './components/PostSuccess'
 
 // App function definition
 function App() {
@@ -24,6 +25,7 @@ function App() {
       <Route path="/donordashboard" element={<Donordashboard />} />
       <Route path="/viewblogs" element={<Viewblogs />} />
       <Route path="/logoutpop" element={<Logout />} />
+      <Route path='/postsuccess' element={<PostSuccess />} />
       </Route>
 
       <Route element={<OnlyAdmin />} >
