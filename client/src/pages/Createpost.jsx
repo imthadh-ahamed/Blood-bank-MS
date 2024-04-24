@@ -6,7 +6,7 @@ import { Button, TextInput } from "flowbite-react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-function Addblogs() {
+function Createpost() {
   return (
     <div>
       <Header />
@@ -18,14 +18,6 @@ function Addblogs() {
           <h1 className="text-center text-3xl font-semibold mb-4">Add Blogs</h1>
           <form action="" className="flex flex-col gap-4">
             <div className="flex flex-col  gap-3 justify-between">
-              
-            {/* Blog ID */}
-              <TextInput
-                type="text"
-                placeholder="Blog ID"
-                required
-                id="blogid"
-              />
 
             {/* Title */}
               <TextInput
@@ -47,7 +39,7 @@ function Addblogs() {
                 theme="snow"
                 placeholder="Write something..."
                 required
-                className="h-72 mb-12 bg-white"
+                className="h-72 mb-12 bg-white rounded-xl"
               />
             </div>
             
@@ -66,4 +58,4 @@ function Addblogs() {
   );
 }
 
-export default Addblogs;
+export default Createpost;

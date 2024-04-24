@@ -29,7 +29,7 @@ function Viewblogs() {
             {/* Conditional rendering of Add Blogs button */}
             {currentUser.isAdmin && (
               <div>
-                <Link to="/Addblogs">
+                <Link to="/create-post">
                   <Button
                     type="submit"
                     className="border-2 border-customRed rounded-xl font-semibold px-2 py-1 mb-4 bg-customRed text-white hover:bg-red-600 transition-colors duration-300"

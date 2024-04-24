@@ -2,7 +2,8 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRoutes from './routes/userRoute.js'
-import authRoutes from './routes/authRoutes.js'
+import authRoute from './routes/authRoutes.js'
+import postRoutes from './routes/postRoute.js'
 import cookieParser from "cookie-parser";
 
 // Load environment variables from a .env file into process.env
@@ -33,7 +34,8 @@ app.listen(3000, () => {
 });
 
 app.use('/api/user', userRoutes);       // Register user routes
-app.use('/api/auth', authRoutes);       // Register authentication routes
+app.use('/api/auth', authRoute);       // Register authentication routes
+app.use('/api/post', postRoutes);
 
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;

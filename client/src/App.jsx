@@ -8,7 +8,7 @@ import Logout from './components/Logout'
 import PrivateRoute from './components/PrivateRoute'
 import Viewblogs from './pages/Viewblogs'
 import OnlyAdmin from './components/OnlyAdmin'
-import Addblogs from './pages/Addblogs'
+import CreatePosts from './pages/Createpost'
 
 // App function definition
 function App() {
@@ -27,7 +27,7 @@ function App() {
       </Route>
 
       <Route element={<OnlyAdmin />} >
-        <Route path="/addblogs" element={<Addblogs />} />
+        <Route path="/create-post" element={<CreatePosts />} />
       </Route>
       
 
