@@ -6,11 +6,9 @@ function PostSuccess() {
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
       <div className="bg-white rounded-lg p-8 max-w-md w-full">
         <div className="flex items-center justify-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">Confirm Logout</h2>
+          <h2 className="text-2xl font-bold text-gray-800">Your blog is successfully posted!</h2>
         </div>
-        <p className="text-gray-700 mb-6">
-          <div> Your blog is successfully posted! </div>
-        </p>
+        
         <div className="flex justify-end">
           <Link to={"/create-post"}>
             <button className="mr-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-300">
