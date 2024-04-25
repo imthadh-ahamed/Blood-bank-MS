@@ -19,11 +19,11 @@ const campaignSchema = new mongoose.Schema({        // Define fields for the use
         type: Date,
         required: true,
     },
-    org: {
+    organization: {
         type: String,
         required: true,
     },
-    req: {
+    requirements: {
         type: String,
         required: true,
     },
