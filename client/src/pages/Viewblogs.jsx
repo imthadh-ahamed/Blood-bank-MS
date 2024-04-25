@@ -16,7 +16,7 @@ function Viewblogs() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await fetch(`/api/post/getposts?userid=${currentUser._id}`);
+        const res = await fetch(`/api/post/getposts?postID=${currentUser._id}`);
         const data = await res.json();
         if (res.ok) {
           setUserPosts(data.posts);
@@ -91,6 +91,7 @@ function Viewblogs() {
             <table className="table-auto overflow-x-scroll">
               <thead>
                 <tr className="">
+                  <th className="px-4 py-2 bg-gray-200">Blog ID</th>
                   <th className="px-4 py-2 bg-gray-200">Date</th>
                   <th className="px-4 py-2 bg-gray-200">Post title</th>
                   <th className="px-4 py-2 bg-gray-200">Content</th>
@@ -103,6 +104,9 @@ function Viewblogs() {
               {userPosts.map((post) => (
                 <tbody className="divide-y">
                   <tr className="text-center border-2 hover:bg-gray-200">
+                  {currentUser.isAdmin && (
+                    <td className="border px-4 py-2">{post.blogid}</td>
+                    )}
                     <td className="border px-4 py-2">
                       {new Date(post.date).toLocaleDateString()}
                     </td>
