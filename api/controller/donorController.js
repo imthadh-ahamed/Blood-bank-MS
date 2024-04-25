@@ -1,85 +1,109 @@
 import Donor from "../models/donorModel.js";
 
-  // @desc    Get a all donors
-  // @route   GET /api/getdonor
-  // @access  Public
-export const getDonors = async (req, res, next) => {
-    try {
-      const donors = await Donor.find();
-      res.json(donors);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  };
-  
-  // @desc    Get a single donor
-  // @route   GET /api/getdonor/:id
-  // @access  Public
-  export const getDonorById = async (req, res, next) => {
-    try {
-      const donor = await Donor.findById(req.params.id);
-      if (!donor) {
-        return res.status(404).json({ message: 'Donor not found' });
-      }
-      res.json(donor);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  };
-  
-  // @desc    Create a new donor
-  // @route   POST /api/adddonor
-  // @access  Public
-export const createDonor = async (req, res, next) => {
-    const donor = new Donor({
-      name: req.body.name,
-      location: req.body.location,
-      designation: req.body.designation
-    });
-  
-    try {
-      const newDonor = await donor.save();
-      res.status(201).json(newDonor);
-    } catch (error) {
-      res.status(400).json({ message: error.message });
-    }
-  };
-  
-  // @desc    Update a donor
-  // @route   PUT /api/editdonor/:id
-  // @access  Public
-export const updateDonor = async (req, res, next) => {
+// @desc    Get donors
+// @route   GET /api/getdonors
+// @access  Public
+export const getDonors = async (req, res) => {
+  try {
+    const donors = await Donor.find();
 
-    try {
-      const donor = await Donor.findById(req.params.id);
-      if (!donor) {
-        return res.status(404).json({ message: 'Donor not found' });
-      }
-  
-      employee.name = req.body.name || employee.name;
-      employee.location = req.body.location || employee.location;
-      employee.designation = req.body.designation || employee.designation;
-  
-      const updatedDonor = await donor.save();
-      res.json(updatedDonor);
-    } catch (error) {
-      res.status(400).json({ message: error.message });
-    }
-  };
-  
-  // @desc    Delete a donor
-  // @route   DELETE /api/deletedonor/:id
-  // @access  Admin Only
-export const deleteDonor = async (req, res, next) => {
+    // Count total number of posts in the database
+    const totalDonors = await Donor.countDocuments();
 
+    return res.status(200).json({ success: true, donors, totalDonors });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+  }
+};
+
+// @desc    Get donor by donorid
+// @route   GET /api/donor/:donorid
+// @access  Public
+export const getDonorById = async (req, res) => {
+  const { donorid } = req.params;
+
+  try {
+    const donor = await Donor.findOne({ donorid });
+    if (!donor) {
+      return res.status(404).json({ success: false, message: "Donor not found" });
+    }
+    return res.status(200).json({ success: true, donor });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+  }
+};
+
+// @desc    Create a new donor
+// @route   POST /api/donor
+// @access  Public
+export const createDonor = async (req, res) => {
+
+    // Check if the user making the request is an admin
+  if (!req.user.isAdmin) {
+    // If not an admin, return a 403 Forbidden error
+    return next(errorHandler(403, "You are not allowed to create a blog post"));
+  }
+
+  // Check if the required fields (title and content) are provided in the request body
+  const {
+    donorid,
+    fullname,
+    nic,
+    dateofbirth,
+    gender,
+    address,
+    bloodtype,
+    contactno,
+    email,
+    preblddntdate,
+} = req.body;
+
+if (!donorid || !fullname || !nic || !dateofbirth || !gender || !address || !bloodtype || !contactno || !email || !preblddntdate) {
+    return res.status(400).json({ success: false, message: "Please provide all required fields" });
+}
+
+  try {
+    const newDonor = await Donor.create(req.body);
+    return res.status(201).json({ success: true, message: "Donor created successfully", newDonor });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+  }
+};
+
+// @desc    Update a donor by donorid
+// @route   PUT /api/donor/:donorid
+// @access  Public
+export const updateDonor = async (req, res) => {
+  const { donorid } = req.params;
+
+  try {
+    const updatedDonor = await Donor.findOneAndUpdate({ donorid }, req.body, { new: true });
+
+    if (!updatedDonor) {
+      return res.status(404).json({ success: false, message: "Donor not found" });
+    }
+
+    return res.status(200).json({ success: true, message: "Donor updated successfully", updatedDonor });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+  }
+};
+
+// @desc    Delete a donor by donorid
+// @route   DELETE /api/donor/:donorid
+// @access  Only Admin
+export const deleteDonor = async (req, res) => {
+    const { donorid } = req.params;
+  
     try {
-      const donor = await Donor.findById(req.params.id);
-      if (!donor) {
-        return res.status(404).json({ message: 'Donor not found' });
+      const deletedDonor = await Donor.findOneAndDelete({ donorid });
+  
+      if (!deletedDonor) {
+        return res.status(404).json({ success: false, message: "Donor not found" });
       }
-      await donor.remove();
-      res.json({ message: 'Donor deleted successfully' });
+  
+      return res.status(200).json({ success: true, message: "Donor deleted successfully", deletedDonor });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      return res.status(500).json({ success: false, message: "Internal server error", error: error.message });
     }
   };

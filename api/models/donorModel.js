@@ -3,7 +3,7 @@ import mongoose from "mongoose"
 // Define a Mongoose schema for the blog post
 const donorSchema = new mongoose.Schema({        // Define fields for the user schema
     donorid: {
-        type: String,
+        type: Number,
         required: true,
         unique: true,
     },
