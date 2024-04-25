@@ -1,21 +1,13 @@
 import express from 'express';
-import { addCampaign, deleteCampaign, getCampaign, getUpdateCampaign, updateCampaign } from '../controller/campaignController.js';
+import { createCampaign, deleteCampaign, getCampaignById, getCampaigns, updateCampaign } from '../controller/campaignController.js';
+import { verifyToken } from '../utils/verifyUser.js';
 
 const router = express.Router();
 
-// Route to add a new campaign
-router.post('/addCampaign', addCampaign);
-
-// Route to get all campaigns
-router.get('/getCampaign', getCampaign);
-
-// Route to update a campaign by ID
-router.put('/updateCampaign/:id', updateCampaign);
-
-// Route to delete a campaign by ID
-router.delete('/deleteCampaign/:id', deleteCampaign);
-
-// Route to get details of a campaign for updating
-router.get('/getUpdateCampaign/:id', getUpdateCampaign);
+router.get('/getCampaigns', getCampaigns);
+router.get('/getCampaign/:campaignID', getCampaignById);
+router.post('/createCampaign', verifyToken, createCampaign);
+router.put('/updateCampaign/:campaignID', verifyToken, updateCampaign);
+router.delete('/deleteCampaign/:campaignID', verifyToken, deleteCampaign);
 
 export default router;
