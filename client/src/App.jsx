@@ -10,6 +10,9 @@ import Viewblogs from './pages/Viewblogs'
 import OnlyAdmin from './components/OnlyAdmin'
 import CreatePosts from './pages/Createpost'
 import PostSuccess from './components/PostSuccess'
+import Updatepost from './pages/Updatepost'
+import Viewdonors from './pages/Viewdonors'
+import Adddonor from './pages/Adddonor'
 
 // App function definition
 function App() {
@@ -25,11 +28,14 @@ function App() {
       <Route element={<PrivateRoute />}>
       <Route path="/donordashboard" element={<Donordashboard />} />
       <Route path="/viewblogs" element={<Viewblogs />} />
+      <Route path="viewdonors" element={<Viewdonors />} />
       <Route path="/logoutpop" element={<Logout />} />
       </Route>
 
       <Route element={<OnlyAdmin />} >
         <Route path="/create-post" element={<CreatePosts />} />
+        <Route path="/create-donor" element={<Adddonor />} />
+        <Route path="/update-post" element={<Updatepost />} />
       </Route>
       
 

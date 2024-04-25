@@ -17,6 +17,11 @@ function Donordashboard() {
         <Link to={'/viewblogs'}>
           View Blogs        
         </Link>
+
+
+        <Link to={'/viewdonors'}>
+          View donors        
+        </Link>
         </div>
       </div>
       <Footer />

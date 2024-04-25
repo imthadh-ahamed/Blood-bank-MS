@@ -3,12 +3,12 @@ import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import { Button, TextInput, Alert, Textarea } from "flowbite-react";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
 
 function Createpost() {
   // State variables for form fields and error handling
+  const [blogid, setBlogID] = useState("");                       // State for blog ID
   const [userid, setUserID] = useState("");                       // State for user ID
   const [title, setTitle] = useState("");                         // State for title
   const [date, setDate] = useState("");                           // State for date
@@ -26,7 +26,7 @@ function Createpost() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userid, title, date, content }),   // Sending form data as JSON
+        body: JSON.stringify({ blogid, userid, title, date, content }),   // Sending form data as JSON
       });
       const data = await res.json();                              // Parsing response data
       if (!res.ok) {
@@ -52,7 +52,18 @@ function Createpost() {
           {/* Form for adding blogs */}
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div className="flex flex-col gap-3">
-              {/* Title */}
+              
+              {/* Blog ID */}
+              <TextInput
+                type="text"
+                placeholder="Blog ID"
+                required
+                value={blogid}
+                onChange={(e) => setBlogID(e.target.value)}
+              />
+
+
+              {/* User ID */}
               <TextInput
                 type="text"
                 placeholder="User ID"

@@ -2,6 +2,10 @@ import mongoose from "mongoose"
 
 // Define a Mongoose schema for the blog post
 const postSchema = new mongoose.Schema({        // Define fields for the user schema
+    blogid: {
+        type: String,
+        required: true,
+    },
     userid: {
         type: String,
         required: true,
