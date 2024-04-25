@@ -5,6 +5,7 @@ import userRoutes from './routes/userRoute.js'
 import authRoute from './routes/authRoutes.js'
 import postRoutes from './routes/postRoute.js'
 import donorsRoute from './routes/donorRoutes.js'
+import campaignRoute from './routes/campaignRoutes.js'
 import cookieParser from "cookie-parser";
 
 // Load environment variables from a .env file into process.env
@@ -38,6 +39,7 @@ app.use('/api/user', userRoutes);       // Register user routes
 app.use('/api/auth', authRoute);       // Register authentication routes
 app.use('/api/post', postRoutes);
 app.use('/api/donor', donorsRoute);
+app.use('/api/campaign', campaignRoute);
 
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
