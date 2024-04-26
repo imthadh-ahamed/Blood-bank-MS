@@ -1,130 +1,104 @@
-import Post from "../models/postModel.js";
 
-// Controller function to create a new blog post
-export const create = async (req, res, next) => {
-  // Check if the user making the request is an admin
+// @desc    Get campaigns
+// @route   GET /api/getCampaigns
+// @access  Only Admin
+export const getCampaigns = async (req, res) => {
+  try {
+    const campaigns = await Campaign.find();
+
+    // Count total number of posts in the database
+    const totalCampaigns = await Campaign.countDocuments();
+
+    return res.status(200).json({ success: true, campaigns, totalCampaigns });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+  }
+};
+
+// @desc    Get campaign by campaignID
+// @route   GET /api/getCampaign/:campaignID
+// @access  Only Admin
+export const getCampaignById = async (req, res) => {
+  const { campaignID } = req.params;
+
+  try {
+    const campaign = await Campaign.findOne({ campaignID });
+    if (!campaign) {
+      return res.status(404).json({ success: false, message: "Campaign not found" });
+    }
+    return res.status(200).json({ success: true, campaign });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+  }
+};
+
+// @desc    Create a new campaign
+// @route   POST /api/createCampaign
+// @access  Only Admin
+export const createCampaign = async (req, res) => {
+
+    // Check if the user making the request is an admin
   if (!req.user.isAdmin) {
     // If not an admin, return a 403 Forbidden error
     return next(errorHandler(403, "You are not allowed to create a blog post"));
   }
 
   // Check if the required fields (title and content) are provided in the request body
-  if (!req.body.blogid || !req.body.userid || !req.body.title || !req.body.content) {
-    // If any required field is missing, return a 400 Bad Request error
-    return next(errorHandler(400, "Please provide all required fields"));
-  }
+  const {
+    campaignID,
+    campaignName,
+    location,
+    date,
+    organization,
+    requirements,
+} = req.body;
 
-  // Generate a slug for the post based on the title
-  const slug = req.body.title
-    .split(" ")
-    .join("-")
-    .toLowerCase()
-    .replace(/[^a-zA-Z0-9-]/g, "");
-
-  // Create a new Post object with data from the request body  
-  const newPost = new Post({
-    ...req.body,                            // Include all fields from the request body
-    slug,                                   // Set the generated slug
-    userId: req.user.id,                    // Set the user ID of the post creator
-  });
+if (!campaignID || !campaignName || !location || !date || !organization || !requirements) {
+    return res.status(400).json({ success: false, message: "Please provide all required fields" });
+}
 
   try {
-    // Save the new post to the database
-    const savedPost = await newPost.save();
-    res.status(201).json(savedPost);        // Send a 201 Created response with the saved post data
+    const newCampaign = await Campaign.create(req.body);
+    return res.status(201).json({ success: true, message: "Campaign created successfully", newCampaign });
   } catch (error) {
-    next(error);                            // If an error occurs while saving the post, pass it to the error handling middleware
+    return res.status(500).json({ success: false, message: "Internal server error", error: error.message });
   }
 };
 
-// Controller function to retrieve blog posts based on query parameters
-export const getposts = async (req, res, next) => {
+// @desc    Update a campaign by campaignID
+// @route   PUT /api/campaign/:campaignID
+// @access  Only Admin
+export const updateCampaign = async (req, res) => {
+  const { campaignID } = req.params;
+
   try {
-    // Parse query parameters for pagination (startIndex and limit) and sorting (order)
-    const startIndex = parseInt(req.query.startIndex) || 0;
-    const limit = parseInt(req.query.limit) || 9;
-    const sortDirection = req.query.order === "asc" ? 1 : -1;
+    const updateCampaign = await Campaign.findOneAndUpdate({ campaignID }, req.body, { new: true });
 
-    // Construct the MongoDB query based on the provided query parameters
-    const posts = await Post.find({
-      // Filter by user ID, category, slug, post ID, or search term if provided
-      ...(req.query.userId && { userId: req.query.userId }),
-      ...(req.query.category && { category: req.query.category }),
-      ...(req.query.slug && { slug: req.query.slug }),
-      ...(req.query.postId && { _id: req.query.postId }),
-      ...(req.query.searchTerm && {
-        $or: [
-          { title: { $regex: req.query.searchTerm, $options: "i" } },
-          { content: { $regex: req.query.searchTerm, $options: "i" } },
-        ],
-      }),
-    })
-    // Sort the results based on the updatedAt field and sorting direction
-      .sort({ updatedAt: sortDirection })
-      .skip(startIndex)
-      .limit(limit);
+    if (!updateCampaign) {
+      return res.status(404).json({ success: false, message: "Campaign not found" });
+    }
 
-    // Count total number of posts in the database
-    const totalPosts = await Post.countDocuments();
-
-    // Calculate the number of posts from the last month
-    const now = new Date();
-    const oneMonthAgo = new Date(
-      now.getFullYear(),
-      now.getMonth() - 1,
-      now.getDate()
-    );
-
-    const lastMonthPosts = await Post.countDocuments({
-      createdAt: { $gte: oneMonthAgo },
-    });
-
-    // Send a 200 OK response with the fetched posts, total number of posts, and last month's posts
-    res.status(200).json({
-      posts,
-      totalPosts,
-      lastMonthPosts,
-    });
+    return res.status(200).json({ success: true, message: "Campaign updated successfully", updateCampaign });
   } catch (error) {
-    next(error);        // If an error occurs while fetching posts, pass it to the error handling middleware
+    return res.status(500).json({ success: false, message: "Internal server error", error: error.message });
   }
 };
 
-
-export const deletepost = async (req, res, next) => {
-  if (!req.user.isAdmin) {
-    return next(errorHandler(403, "You are not allowed to delete this post"));
-  }
-  try {
-    await Post.findByIdAndDelete(req.params.postId);
-    res.status(200).json("The post has been deleted");
-  } catch (error) {
-    next(error);
-  }
-};
-
-
-export const updatepost = async (req, res, next) => {
-  if (!req.user.isAdmin) {
-    return next(errorHandler(403, "You are not allowed to update this post"));
-  }
-  try {
-    const updatedPost = await Post.findByIdAndUpdate(
-      req.params.postId,
-      {
-        $set: {
-          blogid: req.body.blogid,
-          userid: req.body.userid,
-          title: req.body.title,
-          date: req.body.date,
-          content: req.body.content,
-        },
-      },
-      { new: true }
-    );
-    res.status(200).json(updatedPost);
-  } catch (error) {
-    next(error);
-  }
-};
-
+// @desc    Delete a campaign by campaignID
+// @route   DELETE /api/campaign/:campaignID
+// @access  Only Admin
+export const deleteCampaign = async (req, res) => {
+    const { campaignID } = req.params;
+  
+    try {
+      const deleteCampaign = await Campaign.findOneAndDelete({ campaignID });
+  
+      if (!deleteCampaign) {
+        return res.status(404).json({ success: false, message: "Campaign not found" });
+      }
+  
+      return res.status(200).json({ success: true, message: "Campaign deleted successfully", deleteCampaign });
+    } catch (error) {
+      return res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+    }
+  };

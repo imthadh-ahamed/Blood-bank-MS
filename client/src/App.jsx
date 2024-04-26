@@ -12,7 +12,10 @@ import CreatePosts from './pages/Createpost'
 import PostSuccess from './components/PostSuccess'
 import Updatepost from './pages/Updatepost'
 import Viewdonors from './pages/Viewdonors'
+import Viewcampaigns from './pages/Viewcampaigns'
 import Adddonor from './pages/Adddonor'
+import CreateCampaign from './pages/Createcampaign'
+import Updatecampaigns from './pages/Updatecampaigns'
 
 // App function definition
 function App() {
@@ -29,6 +32,7 @@ function App() {
       <Route path="/donordashboard" element={<Donordashboard />} />
       <Route path="/viewblogs" element={<Viewblogs />} />
       <Route path="viewdonors" element={<Viewdonors />} />
+      <Route path="/viewcampaigns" element={<Viewcampaigns />} />
       <Route path="/logoutpop" element={<Logout />} />
       </Route>
 
@@ -36,6 +40,8 @@ function App() {
         <Route path="/create-post" element={<CreatePosts />} />
         <Route path="/create-donor" element={<Adddonor />} />
         <Route path="/update-post" element={<Updatepost />} />
+        <Route path='/create-campaign' element={<CreateCampaign />} />
+        <Route path="/update-campaign/:campaignID" element={<Updatecampaigns />} />
       </Route>
       
 
