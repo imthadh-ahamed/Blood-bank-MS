@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -8,6 +8,30 @@ import { MdCampaign } from "react-icons/md";
 import { LiaBlogSolid } from "react-icons/lia";
 
 function Donordashboard() {
+  const [campaigns, setCampaigns] = useState([]);
+  const [totalCampaigns, setTotalCampaigns] = useState(0);
+
+  useEffect(() => {
+    const fetchCampaigns = async () => {
+      try {
+        const response = await fetch('/api/campaign/getCampaigns');
+        const data = await response.json();
+
+        if (data.success) {
+          setCampaigns(data.campaigns);
+          setTotalCampaigns(data.totalCampaigns); // Update totalCampaigns state
+        } else {
+          console.error(data.message);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCampaigns();
+  }, []);
   return (
     <div>
       <Header />
@@ -16,6 +40,7 @@ function Donordashboard() {
           <Sidebar />
         </div>
         <div className="flex-grow bg-gray-300 p-5 rounded-xl">
+          <div className="flex justify-between flex-wrap">
           {/* Donor Counts */}
           <div className="p-4 bg-gray-400 rounded-lg flex flex-col w-full md:w-1/3 lg:w-1/4 mb-5">
             <div className="flex justify-between">
@@ -44,7 +69,7 @@ function Donordashboard() {
               </div>
               <div className="p-2 flex flex-col">
                 <div className="text-6xl text-blue-700 font-bold text-center">
-                  10
+                {totalCampaigns}
                 </div>
                 <div className="text-2xl  text-blue-700 font-bold text-center">
                   Campaigns
@@ -75,7 +100,7 @@ function Donordashboard() {
               <Link to="/addblogs">See all</Link>
             </div>
           </div>
-
+          </div>
           {/* Line Chart */}
           <div className="flex flex-row justify-between">
             <div>
