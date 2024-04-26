@@ -16,6 +16,7 @@ import Viewcampaigns from './pages/Viewcampaigns'
 import Adddonor from './pages/Adddonor'
 import CreateCampaign from './pages/Createcampaign'
 import Updatecampaigns from './pages/Updatecampaigns'
+import Updatedonors from './pages/Updatedonor'
 
 // App function definition
 function App() {
@@ -42,9 +43,8 @@ function App() {
         <Route path="/update-post" element={<Updatepost />} />
         <Route path='/create-campaign' element={<CreateCampaign />} />
         <Route path="/update-campaign/:campaignID" element={<Updatecampaigns />} />
+        <Route path="/update-donor/:donorid" element={<Updatedonors />} />
       </Route>
-      
-
     </Routes>
     </BrowserRouter>
   )
