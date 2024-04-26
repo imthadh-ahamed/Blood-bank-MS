@@ -25,11 +25,9 @@ function Adddonor() {
     e.preventDefault(); // Prevent default form submission behavior
     try {
       // Sending a POST request to backend API endpoint
-      const res = await fetch("localhost:3000/api/donor/createdonor", {
+      const response = await fetch("/api/donor/createdonor", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           donorid,
           fullname,
@@ -43,14 +41,28 @@ function Adddonor() {
           preblddntdate,
         }), // Sending form data as JSON
       });
-      const data = await res.json(); // Parsing response data
-      if (!res.ok) {
-        setPublishError(data.message || "Failed to publish."); // Setting publish error message if request fails
-        return;
+
+      const data = await response.json(); // Parsing response data
+
+      if (data.success) {
+        console.log("Donor created successfully");
+        navigate("/viewdonors");
+      } else {
+        console.error(data.message);
       }
-      setShowModal(true);
     } catch (error) {
-      setPublishError("Something went wrong"); // Handling unexpected errors
+      console.error(error);
+    } finally {
+      setDonorID("");
+      setFullName("");
+      setNic("");
+      setDOB("");
+      setGender("");
+      setAddress("");
+      setBloodType("");
+      setContactNo("");
+      setEmail("");
+      setpreblddntdate("");
     }
   };
 
@@ -62,108 +74,161 @@ function Adddonor() {
           <Sidebar /> {/* Sidebar component */}
         </div>
         <div className="flex-grow bg-gray-300 p-5 rounded-xl">
-          <h1 className="text-center text-3xl font-semibold mb-4">Add Donors</h1>{" "}
+          <h1 className="text-center text-3xl font-semibold mb-4">
+            Add Donors
+          </h1>
           {/* Heading of the page */}
           {/* Form for adding blogs */}
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <div className="flex flex-col gap-3">
-              {/* Blog ID */}
-              <TextInput
+          <form onSubmit={handleSubmit}>
+            {/* Donor ID */}
+            <div className="mb-4">
+              <input
                 type="number"
+                id="donorid"
                 placeholder="Donor ID"
-                required
+                name="donorid"
                 value={donorid}
                 onChange={(e) => setDonorID(e.target.value)}
-              />
-
-              <TextInput
-                type="text"
-                placeholder="Full Name"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
                 required
-                value={fullname}
-                onChange={(e) => setFullName(e.target.value)}
-              />
-
-              <TextInput
-                type="text"
-                placeholder="NIC"
-                required
-                value={nic}
-                onChange={(e) => setNic(e.target.value)}
-              />
-
-              <TextInput
-                type="date"
-                placeholder="Date of Birth"
-                required
-                value={dateofbirth}
-                onChange={(e) => setDOB(e.target.value)}
-              />
-
-              <TextInput
-                type="text"
-                placeholder="Gender"
-                required
-                value={gender}
-                onChange={(e) => setGender(e.target.value)}
-              />
-
-              <TextInput
-                type="text"
-                placeholder="Address"
-                required
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-              />
-
-              <TextInput
-                type="text"
-                placeholder="Blood Type"
-                required
-                value={bloodtype}
-                onChange={(e) => setBloodType(e.target.value)}
-              />
-
-              <TextInput
-                type="text"
-                placeholder="Contact Number"
-                required
-                value={contactno}
-                onChange={(e) => setContactNo(e.target.value)}
-              />
-
-              <TextInput
-                type="text"
-                placeholder="E-mail"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-
-              <TextInput
-                type="date"
-                placeholder="Previous Blood Donate Date"
-                required
-                value={preblddntdate}
-                onChange={(e) => setpreblddntdate(e.target.value)}
               />
             </div>
 
-            {/* Publish button */}
-            <Button
-              type="submit"
-              className="border-2 border-customRed rounded-xl font-semibold px-4 py-2 bg-customRed text-white hover:bg-red-600 transition-colors duration-300"
-            >
-              Publish
-            </Button>
+            {/* Full Name */}
+            <div className="mb-4">
+              <input
+                type="text"
+                id="fullname"
+                placeholder="Full Name"
+                name="fullname"
+                value={fullname}
+                onChange={(e) => setFullName(e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+                required
+              />
+            </div>
 
-            {/* Displaying publish error if present */}
-            {publishError && (
-              <Alert className="mt-5" color="failure">
-                {publishError}
-              </Alert>
-            )}
+            {/* NIC */}
+            <div className="mb-4">
+              <input
+                type="text"
+                id="nic"
+                placeholder="NIC"
+                name="nic"
+                value={nic}
+                onChange={(e) => setNic(e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+                required
+              />
+            </div>
+
+            {/* Date of Birth */}
+            <div className="mb-4">
+              <input
+                type="date"
+                id="dateofbirth"
+                placeholder="Date"
+                name="dateofbirth"
+                value={dateofbirth}
+                onChange={(e) => setDOB(e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+                required
+              />
+            </div>
+
+            {/* Gender */}
+            <div className="mb-4">
+              <input
+                type="text"
+                id="gender"
+                name="gender"
+                placeholder="Gender"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+                required
+              />
+            </div>
+
+            {/* Address */}
+            <div className="mb-4">
+              <input
+                id="address"
+                name="address"
+                value={address}
+                placeholder="Address"
+                onChange={(e) => setAddress(e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+                required
+              ></input>
+            </div>
+
+            {/* Blood Type */}
+            <div className="mb-4">
+              <input
+                id="bloodtype"
+                name="bloodtype"
+                value={bloodtype}
+                placeholder="Blood Type"
+                onChange={(e) => setBloodType(e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+                required
+              ></input>
+            </div>
+
+            {/* Contact No */}
+            <div className="mb-4">
+              <input
+                id="address"
+                name="address"
+                value={address}
+                placeholder="Address"
+                onChange={(e) => setAddress(e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+                required
+              ></input>
+            </div>
+            {/* Address */}
+            <div className="mb-4">
+              <input
+                id="address"
+                name="address"
+                value={address}
+                placeholder="Address"
+                onChange={(e) => setAddress(e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+                required
+              ></input>
+            </div>
+            {/* Address */}
+            <div className="mb-4">
+              <input
+                id="address"
+                name="address"
+                value={address}
+                placeholder="Address"
+                onChange={(e) => setAddress(e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+                required
+              ></input>
+            </div>
+
+            {/* Submit button */}
+            <div className="flex justify-center">
+              <button
+                type="submit"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                Create
+              </button>
+            </div>
           </form>
+          {/* Displaying publish error if present */}
+          {publishError && (
+            <Alert className="mt-5" color="failure">
+              {publishError}
+            </Alert>
+          )}
           <Modal
             show={showModal}
             onClose={() => setShowModal(false)}
