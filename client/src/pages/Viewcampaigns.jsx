@@ -116,7 +116,7 @@ function Viewcampaigns() {
                   Organization
                 </th>
                 {currentUser.isAdmin && (
-                  <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-left text-xs font-medium uppercase tracking-wider">
+                  <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-xs font-medium uppercase tracking-wider">
                     Actions
                   </th>
                 )}

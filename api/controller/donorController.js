@@ -171,3 +171,26 @@ export const deleteDonor = async (req, res) => {
       });
   }
 };
+
+
+export const getMonthlyDonors = async (req, res) => {
+  try {
+    const monthlyDonors = await Donor.aggregate([
+      {
+        $group: {
+          _id: { $month: "$createdAt" }, // Group by month of creation
+          count: { $sum: 1 }, // Count the number of donors in each month
+        },
+      },
+      { $sort: { _id: 1 } }, // Sort by month (ascending order)
+    ]);
+
+    return res.status(200).json({ success: true, monthlyDonors });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+};

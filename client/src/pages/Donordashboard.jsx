@@ -6,10 +6,12 @@ import { Link } from "react-router-dom";
 import { FaUserDoctor } from "react-icons/fa6";
 import { MdCampaign } from "react-icons/md";
 import { LiaBlogSolid } from "react-icons/lia";
+// import LineChart from '../components/Linechart';
 
 function Donordashboard() {
   const [campaigns, setCampaigns] = useState([]);
   const [totalCampaigns, setTotalCampaigns] = useState(0);
+  const [monthlyDonors, setMonthlyDonors] = useState([]);
 
   useEffect(() => {
     const fetchCampaigns = async () => {
@@ -25,13 +27,33 @@ function Donordashboard() {
         }
       } catch (error) {
         console.error(error);
-      } finally {
-        setIsLoading(false);
       }
     };
 
+    // const fetchMonthlyData = async () => {
+    //   try {
+    //     const response = await fetchMonthlyDonors();
+    //     const data = await response.json();
+    //     if (data.success) {
+    //       setMonthlyDonors(
+    //         data.monthlyDonors.map((item) => ({
+    //           month: item._id, // Extract month value
+    //           count: item.count, // Extract count value
+    //         }))
+    //       );
+    //     } else {
+    //       console.error(data.message);
+    //     }
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // };
+
+    // fetchMonthlyData();
     fetchCampaigns();
   }, []);
+
+
   return (
     <div>
       <Header />
@@ -102,12 +124,11 @@ function Donordashboard() {
           </div>
           </div>
           {/* Line Chart */}
-          <div className="flex flex-row justify-between">
+          <div className="text-center">
             <div>
-              Line chart 1
-            </div>
-            <div>
-              Line chart 2
+              <h1> Monthly Donor Demand </h1>
+              <p> Want to add the line chart</p>
+              {/* <LineChart /> */}
             </div>
           </div>
 
