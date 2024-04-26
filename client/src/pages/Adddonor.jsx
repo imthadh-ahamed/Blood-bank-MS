@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
-import { Button, TextInput, Alert, Modal } from "flowbite-react";
-import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
-import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 function Adddonor() {
   // State variables for form fields and error handling

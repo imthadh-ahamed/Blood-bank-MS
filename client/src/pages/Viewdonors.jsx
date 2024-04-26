@@ -7,11 +7,13 @@ import { Button } from "flowbite-react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-function Viewdonors() {
+function Viewcampaigns() {
   const { currentUser } = useSelector((state) => state.user);
   const [donors, setDonors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredDonors, setFilteredDonors] = useState([]);
 
   useEffect(() => {
     const fetchDonors = async () => {
@@ -22,7 +24,7 @@ function Viewdonors() {
         setDonors(data.donors);
       } catch (error) {
         console.error(error);
-        setDonors([]); // Set empty campaigns on error
+        setDonors([]); // Set empty donors on error
       } finally {
         setIsLoading(false); // Set loading state to false after fetch
       }
@@ -46,6 +48,14 @@ function Viewdonors() {
     }
   };
 
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value);
+    const filteredData = donors.filter((donor) =>
+      donor.donorid.toString().includes(event.target.value)
+    );
+    setFilteredDonors(filteredData);
+  };
+
   return (
     <div>
       <Header />
@@ -58,8 +68,19 @@ function Viewdonors() {
             <h1>View Donors</h1>
           </div>
 
+          {/* Search bar */}
           <div className="flex flex-row justify-between">
-            <div className="mb-4 mt-4">Search Bar</div>
+            <div className="mb-4 mt-4">
+              <input
+                type="text"
+                placeholder="Search Donors"
+                value={searchTerm}
+                onChange={handleChange}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+              />
+            </div>
+
+            {/* Add donor button */}
             {currentUser.isAdmin && (
               <div>
                 <Link to="/create-donor">
@@ -67,7 +88,7 @@ function Viewdonors() {
                     type="submit"
                     className="border-2 border-customRed rounded-xl font-semibold px-2 py-1 mt-4 mb-4 bg-customRed text-white hover:bg-red-600 transition-colors duration-300"
                   >
-                    Add Donors
+                    Add Donor
                   </Button>
                 </Link>
               </div>
@@ -77,38 +98,38 @@ function Viewdonors() {
           <table className="table-auto w-full">
             <thead>
               <tr>
-                <th className="px-6 py-3 border border-gray-200 bg-gray-100 text-left text-xs font-medium uppercase tracking-wider">
+                <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-xs font-medium uppercase tracking-wider">
                   Donor ID
                 </th>
-                <th className="px-6 py-3 border border-gray-200 bg-gray-100 text-left text-xs font-medium uppercase tracking-wider">
+                <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-xs font-medium uppercase tracking-wider">
                   Full Name
                 </th>
-                <th className="px-6 py-3 border border-gray-200 bg-gray-100 text-left text-xs font-medium uppercase tracking-wider">
+                <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-xs font-medium uppercase tracking-wider">
                   NIC
                 </th>
-                <th className="px-6 py-3 border border-gray-200 bg-gray-100 text-left text-xs font-medium uppercase tracking-wider">
+                <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-xs font-medium uppercase tracking-wider">
                   Date of Birth
                 </th>
-                <th className="px-6 py-3 border border-gray-200 bg-gray-100 text-left text-xs font-medium uppercase tracking-wider">
+                <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-xs font-medium uppercase tracking-wider">
                   Gender
                 </th>
-                <th className="px-6 py-3 border border-gray-200 bg-gray-100 text-left text-xs font-medium uppercase tracking-wider">
+                <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-xs font-medium uppercase tracking-wider">
                   Address
                 </th>
-                <th className="px-6 py-3 border border-gray-200 bg-gray-100 text-left text-xs font-medium uppercase tracking-wider">
+                <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-xs font-medium uppercase tracking-wider">
                   Blood Type
                 </th>
-                <th className="px-6 py-3 border border-gray-200 bg-gray-100 text-left text-xs font-medium uppercase tracking-wider">
-                  Contact NO
+                <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-xs font-medium uppercase tracking-wider">
+                  Contact No
                 </th>
-                <th className="px-6 py-3 border border-gray-200 bg-gray-100 text-left text-xs font-medium uppercase tracking-wider">
+                <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-xs font-medium uppercase tracking-wider">
                   E-mail
                 </th>
-                <th className="px-6 py-3 border border-gray-200 bg-gray-100 text-left text-xs font-medium uppercase tracking-wider">
+                <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-xs font-medium uppercase tracking-wider">
                   Previous Blood Donate Date
                 </th>
                 {currentUser.isAdmin && (
-                  <th className="px-6 py-3 border border-gray-200 bg-gray-100 text-left text-xs font-medium uppercase tracking-wider">
+                  <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-xs font-medium uppercase tracking-wider">
                     Actions
                   </th>
                 )}
@@ -117,21 +138,41 @@ function Viewdonors() {
             <tbody>
               {donors.map((donor) => (
                 <tr
-                  key={donor.donor}
+                  key={donor.donorid}
                   className="border border-gray-200 hover:bg-gray-100"
                 >
-                  <td className="px-6 py-4">{donor.donorid}</td>
-                  <td className="px-6 py-4">{donor.fullname}</td>
-                  <td className="px-6 py-4">{donor.nic}</td>
-                  <td className="px-6 py-4">{new Date(donor.dateofbirth).toLocaleDateString()}</td>
-                  <td className="px-6 py-4">{donor.gender}</td>
-                  <td className="px-6 py-4">{donor.address}</td>
-                  <td className="px-6 py-4">{donor.bloodtype}</td>
-                  <td className="px-6 py-4">{donor.contactno}</td>
-                  <td className="px-6 py-4">{donor.email}</td>
-                  <td className="px-6 py-4">{new Date(donor.preblddntdate).toLocaleDateString()}</td>
+                  <td className="px-6 py-4 text-center">
+                    {donor.donorid}
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                    {donor.fullname}
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                    {donor.nic}
+                    </td>
+                  <td className="px-6 py-4 text-center">
+                    {new Date(donor.dateofbirth).toLocaleDateString()}
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                    {donor.gender}
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                    {donor.address}
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                    {donor.bloodtype}
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                    {donor.contactno}
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                    {donor.email}
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                    {new Date(donor.preblddntdate).toLocaleDateString()}
+                  </td>
                   {currentUser.isAdmin && (
-                    <td className="px-6 py-4 text-right">
+                    <td className="px-6 py-4 text-center">
                       <button
                         className="px-2 py-1 text-red-500 hover:text-red-700 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md"
                         onClick={() => handleDelete(donor.donorid)}
@@ -141,7 +182,7 @@ function Viewdonors() {
                       <button
                         className="px-2 py-1 text-blue-500 hover:text-blue-700 focus:outline-none focus:ring focus:ring-blue-200 focus:ring-opacity-50 rounded-md ml-2"
                         onClick={() =>
-                          navigate(`/edit-campaign/${donor.donorid}`)
+                          navigate(`/update-donor/${donor.donorid}`)
                         }
                       >
                         Edit
@@ -159,4 +200,4 @@ function Viewdonors() {
   );
 }
 
-export default Viewdonors;
+export default Viewcampaigns;
