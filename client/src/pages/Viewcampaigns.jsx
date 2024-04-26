@@ -13,6 +13,7 @@ function Viewcampaigns() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
+  const [filteredCampaigns, setFilteredCampaigns] = useState([]); 
 
   useEffect(() => {
     const fetchCampaigns = async () => {
@@ -99,19 +100,19 @@ function Viewcampaigns() {
           <table className="table-auto w-full">
             <thead>
               <tr>
-                <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-left text-xs font-medium uppercase tracking-wider">
+                <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-xs font-medium uppercase tracking-wider">
                   Campaign ID
                 </th>
-                <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-left text-xs font-medium uppercase tracking-wider">
+                <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-xs font-medium uppercase tracking-wider">
                   Campaign Name
                 </th>
-                <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-left text-xs font-medium uppercase tracking-wider">
+                <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-xs font-medium uppercase tracking-wider">
                   Location
                 </th>
-                <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-left text-xs font-medium uppercase tracking-wider">
+                <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-xs font-medium uppercase tracking-wider">
                   Date
                 </th>
-                <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-left text-xs font-medium uppercase tracking-wider">
+                <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-xs font-medium uppercase tracking-wider">
                   Organization
                 </th>
                 {currentUser.isAdmin && (
