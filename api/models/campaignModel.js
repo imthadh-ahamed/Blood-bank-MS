@@ -1,36 +1,40 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 // Define a Mongoose schema for the blog post
-const campaignSchema = new mongoose.Schema({        // Define fields for the user schema
+const campaignSchema = new mongoose.Schema(
+  {
+    // Define fields for the user schema
     campaignID: {
-        type: Number,
-        required: true,
-        unique: true,
+      type: Number,
+      required: true,
+      unique: true,
     },
     campaignName: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     location: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     date: {
-        type: Date,
-        required: true,
+      type: Date,
+      required: true,
     },
     organization: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     requirements: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
-}, { timestamps: true });
+  },
+  { timestamps: true }
+);
 
 // Create a Mongoose model for the user based on the defined schema
-const Campaign = mongoose.model('Campaign', campaignSchema);
+const Campaign = mongoose.model("Campaign", campaignSchema);
 
 // Export the Mongoose model to be used in other files
 export default Campaign;

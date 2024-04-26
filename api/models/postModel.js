@@ -1,37 +1,40 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 // Define a Mongoose schema for the blog post
-const postSchema = new mongoose.Schema({        // Define fields for the user schema
+const postSchema = new mongoose.Schema(
+  {
+    // Define fields for the user schema
     blogid: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     userid: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     content: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     title: {
-        type: String,
-        required: true,
-        unique: true,
+      type: String,
+      required: true,
+      unique: true,
     },
     date: {
-        type: Date,
-        required: true,
+      type: Date,
+      required: true,
     },
     slug: {
-        type: String,
-        default: false,
+      type: String,
+      default: false,
     },
-},  {timestamps: true}      // Enable timestamps to automatically add createdAt and updatedAt fields
+  },
+  { timestamps: true } // Enable timestamps to automatically add createdAt and updatedAt fields
 );
 
 // Create a Mongoose model for the user based on the defined schema
-const Post = mongoose.model('Post', postSchema);
+const Post = mongoose.model("Post", postSchema);
 
 // Export the Mongoose model to be used in other files
 export default Post;
