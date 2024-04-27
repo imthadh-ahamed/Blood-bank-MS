@@ -1,104 +1,139 @@
+import Post from "../models/postModel.js";
 
-// @desc    Get campaigns
-// @route   GET /api/getCampaigns
+// @desc    Get posts
+// @route   GET /api/post/getPosts
 // @access  Only Admin
-export const getCampaigns = async (req, res) => {
+export const getPosts = async (req, res) => {
   try {
-    const campaigns = await Campaign.find();
+    const posts = await Post.find();
 
     // Count total number of posts in the database
-    const totalCampaigns = await Campaign.countDocuments();
+    const totalPosts = await Post.countDocuments();
 
-    return res.status(200).json({ success: true, campaigns, totalCampaigns });
+    return res.status(200).json({ success: true, posts, totalPosts });
   } catch (error) {
-    return res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
   }
 };
 
-// @desc    Get campaign by campaignID
-// @route   GET /api/getCampaign/:campaignID
+// @desc    Get posy by blogid
+// @route   GET /api/post/getPost/:blogid
 // @access  Only Admin
-export const getCampaignById = async (req, res) => {
-  const { campaignID } = req.params;
+export const getPostById = async (req, res) => {
+  const { blogid } = req.params;
 
   try {
-    const campaign = await Campaign.findOne({ campaignID });
-    if (!campaign) {
-      return res.status(404).json({ success: false, message: "Campaign not found" });
+    const post = await Post.findOne({ blogid });
+    if (!post) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Post not found" });
     }
-    return res.status(200).json({ success: true, campaign });
+    return res.status(200).json({ success: true, post });
   } catch (error) {
-    return res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
   }
 };
 
-// @desc    Create a new campaign
-// @route   POST /api/createCampaign
+// @desc    Create a new post
+// @route   POST /api/post/createPost
 // @access  Only Admin
-export const createCampaign = async (req, res) => {
-
-    // Check if the user making the request is an admin
+export const createPost = async (req, res) => {
+  // Check if the user making the request is an admin
   if (!req.user.isAdmin) {
     // If not an admin, return a 403 Forbidden error
     return next(errorHandler(403, "You are not allowed to create a blog post"));
   }
 
   // Check if the required fields (title and content) are provided in the request body
-  const {
-    campaignID,
-    campaignName,
-    location,
-    date,
-    organization,
-    requirements,
-} = req.body;
+  const { blogid, userid, title, date, content } = req.body;
 
-if (!campaignID || !campaignName || !location || !date || !organization || !requirements) {
-    return res.status(400).json({ success: false, message: "Please provide all required fields" });
-}
+  if (!blogid || !userid || !title || !date || !date || !content) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Please provide all required fields" });
+  }
 
   try {
-    const newCampaign = await Campaign.create(req.body);
-    return res.status(201).json({ success: true, message: "Campaign created successfully", newCampaign });
+    const newPost = await Post.create(req.body);
+    return res.status(201).json({
+      success: true,
+      message: "Post created successfully",
+      newPost,
+    });
   } catch (error) {
-    return res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
   }
 };
 
-// @desc    Update a campaign by campaignID
-// @route   PUT /api/campaign/:campaignID
+// @desc    Update a post by post ID
+// @route   PUT /api/post/updatePost/:postID
 // @access  Only Admin
-export const updateCampaign = async (req, res) => {
-  const { campaignID } = req.params;
+export const updatePost = async (req, res) => {
+  const { blogid } = req.params;
 
   try {
-    const updateCampaign = await Campaign.findOneAndUpdate({ campaignID }, req.body, { new: true });
+    const updatePost = await Post.findOneAndUpdate({ blogid }, req.body, {
+      new: true,
+    });
 
-    if (!updateCampaign) {
-      return res.status(404).json({ success: false, message: "Campaign not found" });
+    if (!updatePost) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Post not found" });
     }
 
-    return res.status(200).json({ success: true, message: "Campaign updated successfully", updateCampaign });
+    return res.status(200).json({
+      success: true,
+      message: "Post updated successfully",
+      updatePost,
+    });
   } catch (error) {
-    return res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
   }
 };
 
-// @desc    Delete a campaign by campaignID
-// @route   DELETE /api/campaign/:campaignID
+// @desc    Delete a post by post ID
+// @route   DELETE /api/post/deletePost/:post ID
 // @access  Only Admin
-export const deleteCampaign = async (req, res) => {
-    const { campaignID } = req.params;
-  
-    try {
-      const deleteCampaign = await Campaign.findOneAndDelete({ campaignID });
-  
-      if (!deleteCampaign) {
-        return res.status(404).json({ success: false, message: "Campaign not found" });
-      }
-  
-      return res.status(200).json({ success: true, message: "Campaign deleted successfully", deleteCampaign });
-    } catch (error) {
-      return res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+export const deletePost = async (req, res) => {
+  const { blogid } = req.params;
+
+  try {
+    const deletePost = await Post.findOneAndDelete({ blogid });
+
+    if (!deletePost) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Campaign not found" });
     }
-  };
+
+    return res.status(200).json({
+      success: true,
+      message: "Post deleted successfully",
+      deletePost,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+};

@@ -38,14 +38,11 @@ function Updatedonors() {
     e.preventDefault();
 
     try {
-      const response = await fetch(
-        `/api/donor/updatedonor/${donorid}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(donorData),
-        }
-      );
+      const response = await fetch(`/api/donor/updatedonor/${donorid}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(donorData),
+      });
 
       const data = await response.json();
 
@@ -73,7 +70,6 @@ function Updatedonors() {
           </h1>
 
           <form onSubmit={handleSubmit}>
-
             {/* Donor ID (Read-only) */}
             <div className="mb-4">
               <input
@@ -98,7 +94,6 @@ function Updatedonors() {
                 value={donorData.fullname}
                 onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
-                required
               />
             </div>
 
@@ -112,7 +107,6 @@ function Updatedonors() {
                 value={donorData.nic}
                 onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
-                required
               />
             </div>
 
@@ -126,7 +120,6 @@ function Updatedonors() {
                 value={donorData.dateofbirth}
                 onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
-                required
               />
             </div>
 
@@ -140,7 +133,6 @@ function Updatedonors() {
                 value={donorData.gender}
                 onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
-                required
               />
             </div>
 
@@ -154,7 +146,6 @@ function Updatedonors() {
                 value={donorData.address}
                 onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
-                required
               />
             </div>
 
@@ -168,7 +159,6 @@ function Updatedonors() {
                 value={donorData.bloodtype}
                 onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
-                required
               />
             </div>
 
@@ -182,7 +172,6 @@ function Updatedonors() {
                 value={donorData.contactno}
                 onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
-                required
               />
             </div>
 
@@ -196,7 +185,6 @@ function Updatedonors() {
                 value={donorData.email}
                 onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
-                required
               />
 
               {/* Previous Blodd Donate */}
@@ -204,13 +192,12 @@ function Updatedonors() {
             <div className="mb-4">
               <input
                 type="date"
-                placeholder="Address"
+                placeholder="Previous Blood Donate Date"
                 id="preblddntdate   1"
                 name="preblddntdate"
                 value={donorData.preblddntdate}
                 onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
-                required
               />
             </div>
 

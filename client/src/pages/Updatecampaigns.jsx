@@ -97,7 +97,6 @@ function Updatecampaigns() {
                 value={campaignData.campaignName}
                 onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
-                required
               />
             </div>
 
@@ -111,7 +110,6 @@ function Updatecampaigns() {
                 value={campaignData.location}
                 onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
-                required
               />
             </div>
 
@@ -125,7 +123,6 @@ function Updatecampaigns() {
                 value={campaignData.date}
                 onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
-                required
               />
             </div>
 
@@ -139,7 +136,6 @@ function Updatecampaigns() {
                 value={campaignData.organization}
                 onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
-                required
               />
             </div>
 
@@ -154,7 +150,6 @@ function Updatecampaigns() {
                 onChange={handleChange}
                 rows={5}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
-                required
               />
             </div>
 

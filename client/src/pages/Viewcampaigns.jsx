@@ -115,6 +115,9 @@ function Viewcampaigns() {
                 <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-xs font-medium uppercase tracking-wider">
                   Organization
                 </th>
+                <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-xs font-medium uppercase tracking-wider">
+                  Requirements
+                </th>
                 {currentUser.isAdmin && (
                   <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-xs font-medium uppercase tracking-wider">
                     Actions
@@ -140,6 +143,9 @@ function Viewcampaigns() {
                   </td>
                   <td className="px-6 py-4 text-center">
                     {campaign.organization}
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                    {campaign.requirements}
                   </td>
                   {currentUser.isAdmin && (
                     <td className="px-6 py-4 text-center">

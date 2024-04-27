@@ -1,17 +1,19 @@
 import express from "express";
 import { verifyToken } from "../utils/verifyUser.js";
 import {
-  create,
-  getposts,
-  deletepost,
-  updatepost,
+  createPost,
+  deletePost,
+  getPostById,
+  getPosts,
+  updatePost,
 } from "../controller/postController.js";
 
 const router = express.Router();
 
-router.post("/create", verifyToken, create);
-router.get("/getposts", getposts);
-router.delete("/deletepost/:postId", verifyToken, deletepost);
-router.put("/updatepost/:postId", verifyToken, updatepost);
+router.get("/getPosts", getPosts);
+router.get("/getPost/:blogid", getPostById);
+router.post("/createPost", verifyToken, createPost);
+router.put("/updatePost/:blogid", verifyToken, updatePost);
+router.delete("/deletePost/:blogid", verifyToken, deletePost);
 
 export default router;
