@@ -144,7 +144,7 @@ function Createcampaign() {
                 rows="5"
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
                 required
-              ></textarea>
+              />
             </div>
 
             {/* Submit button */}

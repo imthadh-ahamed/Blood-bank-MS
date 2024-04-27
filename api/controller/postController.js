@@ -56,7 +56,7 @@ export const createPost = async (req, res) => {
   // Check if the required fields (title and content) are provided in the request body
   const { blogid, userid, title, date, content } = req.body;
 
-  if (!blogid || !userid || !title || !date || !date || !content) {
+  if (!blogid || !userid || !title || !date || !content) {
     return res
       .status(400)
       .json({ success: false, message: "Please provide all required fields" });

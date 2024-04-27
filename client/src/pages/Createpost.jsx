@@ -2,123 +2,146 @@ import React, { useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
-import { Button, TextInput, Alert, Textarea } from "flowbite-react";
-import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
 
 function Createpost() {
   // State variables for form fields and error handling
-  const [blogid, setBlogID] = useState("");                       // State for blog ID
-  const [userid, setUserID] = useState("");                       // State for user ID
-  const [title, setTitle] = useState("");                         // State for title
-  const [date, setDate] = useState("");                           // State for date
-  const [content, setContent] = useState("");                     // State for content
-  const [publishError, setPublishError] = useState(null);         // State for publish
-  const navigate = useNavigate();                                 // Hook for navigation
+  const [blogid, setBlogID] = useState(""); // State for blog ID
+  const [userid, setUserID] = useState(""); // State for user ID
+  const [title, setTitle] = useState(""); // State for title
+  const [date, setDate] = useState(""); // State for date
+  const [content, setContent] = useState(""); // State for content
+  const [publishError, setPublishError] = useState(null); // State for publish
+  const navigate = useNavigate(); // Hook for navigation
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault();                                           // Prevent default form submission behavior
+    e.preventDefault(); // Prevent default form submission behavior
     try {
       // Sending a POST request to backend API endpoint
-      const res = await fetch('/api/post/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ blogid, userid, title, date, content }),   // Sending form data as JSON
+      const response = await fetch("/api/post/createPost", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ blogid, userid, title, date, content }), // Sending form data as JSON
       });
-      const data = await res.json();                              // Parsing response data
-      if (!res.ok) {
-        setPublishError(data.message || 'Failed to publish.');    // Setting publish error message if request fails
-        return;
+
+      const data = await response.json();
+
+      if (data.success) {
+        console.log("Post created successfully");
+        navigate("/viewblogs"); // Redirect to view blogs page after successful creation
+      } else {
+        console.error(data.message);
       }
-      navigate("/postsuccess");                                   // Redirecting to post success page if request succeeds
     } catch (error) {
-      setPublishError('Something went wrong');                    // Handling unexpected errors
+      console.error(error);
+    } finally {
+      setBlogID("");
+      setTitle("");
+      setDate("");
+      setContent("");
     }
   };
 
   return (
     <div>
-      <Header />                                                  {/* Header component */}
+      <Header /> {/* Header component */}
       <div className="min-h-screen flex flex-row">
         <div>
-          <Sidebar />                                              {/* Sidebar component */}
+          <Sidebar /> {/* Sidebar component */}
         </div>
         <div className="flex-grow bg-gray-300 p-5 rounded-xl">
-          <h1 className="text-center text-3xl font-semibold mb-4">Add Blogs</h1>    {/* Heading of the page */}
-
+          {/* Heading of the page */}
+          <h1 className="text-center text-3xl font-semibold mb-4">
+            Add Blogs
+          </h1>
           {/* Form for adding blogs */}
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <div className="flex flex-col gap-3">
-              
-              {/* Blog ID */}
-              <TextInput
-                type="text"
+          <form onSubmit={handleSubmit}>
+
+            {/* Blog ID */}
+            <div className="mb-4">
+              <input
+                type="number"
+                id="blogid"
                 placeholder="Blog ID"
-                required
+                name="blogid"
                 value={blogid}
                 onChange={(e) => setBlogID(e.target.value)}
-              />
-
-
-              {/* User ID */}
-              <TextInput
-                type="text"
-                placeholder="User ID"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
                 required
-                value={userid}
-                onChange={(e) => setUserID(e.target.value)}
-              />
-              
-              
-              {/* Title */}
-              <TextInput
-                type="text"
-                placeholder="Title"
-                required
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-
-              {/* Date */}
-              <TextInput
-                type="date"
-                placeholder="Date"
-                required
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-              />
-
-              {/* Enter the blog body */}
-              <Textarea
-                placeholder="Write something..."
-                required
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                className="h-72 mb-12 bg-white rounded-xl"
               />
             </div>
 
-            {/* Publish button */}
-            <Button
-              type="submit"
-              className="border-2 border-customRed rounded-xl font-semibold px-4 py-2 bg-customRed text-white hover:bg-red-600 transition-colors duration-300"
-            >
-              Publish
-            </Button>
+            {/* User ID */}
+            <div className="mb-4">
+              <input
+                type="text"
+                id="userid"
+                placeholder="User ID"
+                name="userid"
+                value={userid}
+                onChange={(e) => setUserID(e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+                required
+              />
+            </div>
 
-            {/* Displaying publish error if present */}
-            {publishError && (
-              <Alert className="mt-5" color="failure">
-                {publishError}
-              </Alert>
-            )}
+            {/* Title */}
+            <div className="mb-4">
+              <input
+                type="text"
+                id="title"
+                placeholder="Title"
+                name="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+                required
+              />
+            </div>
+
+            {/* Date */}
+            <div className="mb-4">
+              <input
+                type="date"
+                id="date"
+                placeholder="Date"
+                name="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+                required
+              />
+            </div>
+
+            {/* Content */}
+            <div className="mb-4">
+              <textarea
+                type="text"
+                id="content"
+                name="content"
+                placeholder="Write Something..."
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                rows={10}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+                required
+              />
+            </div>
+
+            {/* Submit button */}
+            <div className="flex justify-center">
+              <button
+                type="submit"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                Create
+              </button>
+            </div>
           </form>
         </div>
       </div>
-      <Footer />      {/* Footer component */}
+      <Footer /> {/* Footer component */}
     </div>
   );
 }
