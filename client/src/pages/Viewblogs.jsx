@@ -3,9 +3,10 @@ import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
-import { Button } from "flowbite-react";
+import { Button, Modal } from "flowbite-react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 function Viewblogs() {
   const { currentUser } = useSelector((state) => state.user);
@@ -13,7 +14,9 @@ function Viewblogs() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredPosts, setFilteredPosts] = useState([]); 
+  const [filteredPosts, setFilteredPosts] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedPostId, setSelectedPostId] = useState(null);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -33,6 +36,7 @@ function Viewblogs() {
   }, []);
 
   const handleDelete = async (blogid) => {
+    setShowModal(false);
     try {
       const response = await fetch(
         `/api/post/deletePost/${blogid}`,
@@ -100,9 +104,11 @@ function Viewblogs() {
           <table className="table-auto w-full">
             <thead>
               <tr>
+              {currentUser.isAdmin && (
                 <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-xs font-medium uppercase tracking-wider">
                   Blog ID
                 </th>
+              )}
                 <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-xs font-medium uppercase tracking-wider">
                   User ID
                 </th>
@@ -128,9 +134,11 @@ function Viewblogs() {
                   key={post.blogid}
                   className="border border-gray-200 hover:bg-gray-100"
                 >
+                  {currentUser.isAdmin && (
                   <td className="px-6 py-4 text-center">
                     {post.blogid}
                   </td>
+                  )}
                   <td className="px-6 py-4 text-center">
                     {post.userid}
                   </td>
@@ -147,7 +155,10 @@ function Viewblogs() {
                     <td className="px-6 py-4 text-center">
                       <button
                         className="px-2 py-1 text-red-500 hover:text-red-700 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md"
-                        onClick={() => handleDelete(post.blogid)}
+                        onClick={() => {
+                          setSelectedPostId(post.blogid);
+                          setShowModal(true);
+                        }}
                       >
                         Delete
                       </button>
@@ -165,6 +176,33 @@ function Viewblogs() {
               ))}
             </tbody>
           </table>
+
+          <Modal
+              show={showModal}
+              onClose={() => setShowModal(false)}
+              popup
+              size="md"
+            >
+              <Modal.Header />
+              <Modal.Body>
+                <div className="text-center">
+                  <HiOutlineExclamationCircle className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
+                  <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400">
+                    Are you sure you want to delete this post?
+                  </h3>
+                  <div className="flex justify-center gap-4">
+                    <Button color="red" onClick={() => handleDelete(selectedPostId)}>
+                      Yes, I'm sure
+                    </Button>
+                    <Button color="gray" onClick={() => setShowModal(false)}>
+                      No, cancel
+                    </Button>
+                  </div>
+                </div>
+              </Modal.Body>
+            </Modal>
+
+
         </div>
       </div>
       <Footer />
