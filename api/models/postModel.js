@@ -12,10 +12,6 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    content: {
-      type: String,
-      required: true,
-    },
     title: {
       type: String,
       required: true,
@@ -25,9 +21,9 @@ const postSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
-    slug: {
+    content: {
       type: String,
-      default: false,
+      required: true,
     },
   },
   { timestamps: true } // Enable timestamps to automatically add createdAt and updatedAt fields

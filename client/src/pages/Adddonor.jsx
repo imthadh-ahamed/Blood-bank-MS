@@ -3,6 +3,8 @@ import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
+import { Button, Modal } from "flowbite-react";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 function Adddonor() {
   // State variables for form fields and error handling
@@ -74,12 +76,14 @@ function Adddonor() {
           <Sidebar /> {/* Sidebar component */}
         </div>
         <div className="flex-grow bg-gray-300 p-5 rounded-xl">
+          {/* Heading of the page */}
           <h1 className="text-center text-3xl font-semibold mb-4">
             Add Donors
           </h1>
-          {/* Heading of the page */}
-          {/* Form for adding blogs */}
+
+          {/* Form for adding donors */}
           <form onSubmit={handleSubmit}>
+
             {/* Donor ID */}
             <div className="mb-4">
               <input
@@ -127,7 +131,7 @@ function Adddonor() {
               <input
                 type="date"
                 id="dateofbirth"
-                placeholder="Date"
+                placeholder="Date of Birth"
                 name="dateofbirth"
                 value={dateofbirth}
                 onChange={(e) => setDOB(e.target.value)}
@@ -153,6 +157,7 @@ function Adddonor() {
             {/* Address */}
             <div className="mb-4">
               <input
+              type="text"
                 id="address"
                 name="address"
                 value={address}
@@ -166,6 +171,7 @@ function Adddonor() {
             {/* Blood Type */}
             <div className="mb-4">
               <input
+              type="text"
                 id="bloodtype"
                 name="bloodtype"
                 value={bloodtype}
@@ -179,35 +185,40 @@ function Adddonor() {
             {/* Contact No */}
             <div className="mb-4">
               <input
-                id="address"
-                name="address"
-                value={address}
-                placeholder="Address"
-                onChange={(e) => setAddress(e.target.value)}
+              type="text"
+                id="contactno"
+                name="contactno"
+                value={contactno}
+                placeholder="Contact No"
+                onChange={(e) => setContactNo(e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
                 required
               ></input>
             </div>
-            {/* Address */}
+
+            {/* E-mail */}
             <div className="mb-4">
               <input
-                id="address"
-                name="address"
-                value={address}
-                placeholder="Address"
-                onChange={(e) => setAddress(e.target.value)}
+              type="text"
+                id="email"
+                name="email"
+                value={email}
+                placeholder="E-mail"
+                onChange={(e) => setEmail(e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
                 required
               ></input>
             </div>
-            {/* Address */}
+
+            {/* Previous Blood Donate Date */}
             <div className="mb-4">
               <input
-                id="address"
-                name="address"
-                value={address}
-                placeholder="Address"
-                onChange={(e) => setAddress(e.target.value)}
+              type="date"
+                id="preblddntdate"
+                name="preblddntdate"
+                value={preblddntdate}
+                placeholder="Previous Blood Donate Date"
+                onChange={(e) => setpreblddntdate(e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
                 required
               ></input>

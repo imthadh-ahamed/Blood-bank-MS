@@ -10,7 +10,11 @@ import { LiaBlogSolid } from "react-icons/lia";
 
 function Donordashboard() {
   const [campaigns, setCampaigns] = useState([]);
+  const [donors, setDonors] = useState([]);
+  const [blogs, setBlogs] = useState([]);
   const [totalCampaigns, setTotalCampaigns] = useState(0);
+  const [totalDonors, setTotalDonors] = useState(0);
+  const [totalBlogs, setTotalBlogs] = useState(0);
   const [monthlyDonors, setMonthlyDonors] = useState([]);
 
   useEffect(() => {
@@ -22,6 +26,38 @@ function Donordashboard() {
         if (data.success) {
           setCampaigns(data.campaigns);
           setTotalCampaigns(data.totalCampaigns); // Update totalCampaigns state
+        } else {
+          console.error(data.message);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const fetchDonors = async () => {
+      try {
+        const response = await fetch('/api/donor/getdonors');
+        const data = await response.json();
+
+        if (data.success) {
+          setDonors(data.donors);
+          setTotalDonors(data.totalDonors); // Update totalDonors state
+        } else {
+          console.error(data.message);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const fetchBlogs = async () => {
+      try {
+        const response = await fetch('/api/donor/getdonors');
+        const data = await response.json();
+
+        if (data.success) {
+          setDonors(data.donors);
+          setTotalDonors(data.totalDonors); // Update totalDonors state
         } else {
           console.error(data.message);
         }
@@ -51,6 +87,7 @@ function Donordashboard() {
 
     // fetchMonthlyData();
     fetchCampaigns();
+    fetchDonors();
   }, []);
 
 
@@ -71,7 +108,7 @@ function Donordashboard() {
               </div>
               <div className="p-2 flex flex-col">
                 <div className="text-6xl text-blue-700 font-bold text-center">
-                  50
+                {totalDonors}
                 </div>
                 <div className="text-2xl  text-blue-700 font-bold text-center">
                   Donors

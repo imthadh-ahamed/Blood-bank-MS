@@ -32,7 +32,7 @@ function App() {
       <Route element={<PrivateRoute />}>
       <Route path="/donordashboard" element={<Donordashboard />} />
       <Route path="/viewblogs" element={<Viewblogs />} />
-      <Route path="viewdonors" element={<Viewdonors />} />
+      <Route path="/viewdonors" element={<Viewdonors />} />
       <Route path="/viewcampaigns" element={<Viewcampaigns />} />
       <Route path="/logoutpop" element={<Logout />} />
       </Route>
