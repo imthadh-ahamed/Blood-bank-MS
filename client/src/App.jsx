@@ -40,7 +40,7 @@ function App() {
       <Route element={<OnlyAdmin />} >
         <Route path="/create-post" element={<CreatePosts />} />
         <Route path="/create-donor" element={<Adddonor />} />
-        <Route path="/update-post" element={<Updatepost />} />
+        <Route path="/update-post/:blogid" element={<Updatepost />} />
         <Route path='/create-campaign' element={<CreateCampaign />} />
         <Route path="/update-campaign/:campaignID" element={<Updatecampaigns />} />
         <Route path="/update-donor/:donorid" element={<Updatedonors />} />
