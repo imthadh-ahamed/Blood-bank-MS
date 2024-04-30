@@ -17,6 +17,7 @@ function Viewdonors() {
   const [filteredDonors, setFilteredDonors] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedDonorId, setSelectedDonorId] = useState(null);
+  const apiUrl = "https://dummyjson.com/products/search?q=";
 
   useEffect(() => {
     const fetchDonors = async () => {
@@ -35,6 +36,7 @@ function Viewdonors() {
     };
     fetchDonors();
   }, []);
+
   const handleDelete = async (donorid) => {
     setShowModal(false);
     try {
@@ -60,6 +62,15 @@ function Viewdonors() {
     setFilteredDonors(filteredData);
   };
 
+  const onSearch = (e) => {
+    const text = e.target.value;
+    setSearchTerm(text);
+    const filtered = donors.filter((donor) =>
+      donor.fullname.toLowerCase().includes(text.toLowerCase())
+    );
+    setFilteredDonors(filtered);
+  };
+
   return (
     <div>
       <Header />
@@ -79,7 +90,7 @@ function Viewdonors() {
                 type="text"
                 placeholder="Search Donors"
                 value={searchTerm}
-                onChange={handleChange}
+                onChange={onSearch}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
               />
             </div>
@@ -102,11 +113,11 @@ function Viewdonors() {
           <table className="table-auto w-full">
             <thead>
               <tr>
-              {currentUser.isAdmin && (
-                <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-xs font-medium uppercase tracking-wider">
-                  Donor ID
-                </th>
-              )}
+                {currentUser.isAdmin && (
+                  <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-xs font-medium uppercase tracking-wider">
+                    Donor ID
+                  </th>
+                )}
                 <th className="px-6 py-3 text-center border border-gray-200 bg-gray-100 text-xs font-medium uppercase tracking-wider">
                   Full Name
                 </th>
@@ -148,34 +159,18 @@ function Viewdonors() {
                   className="border border-gray-200 hover:bg-gray-100"
                 >
                   {currentUser.isAdmin && (
-                  <td className="px-6 py-4 text-center">
-                    {donor.donorid}
-                  </td>
+                    <td className="px-6 py-4 text-center">{donor.donorid}</td>
                   )}
-                  <td className="px-6 py-4 text-center">
-                    {donor.fullname}
-                  </td>
-                  <td className="px-6 py-4 text-center">
-                    {donor.nic}
-                    </td>
+                  <td className="px-6 py-4 text-center">{donor.fullname}</td>
+                  <td className="px-6 py-4 text-center">{donor.nic}</td>
                   <td className="px-6 py-4 text-center">
                     {new Date(donor.dateofbirth).toLocaleDateString()}
                   </td>
-                  <td className="px-6 py-4 text-center">
-                    {donor.gender}
-                  </td>
-                  <td className="px-6 py-4 text-center">
-                    {donor.address}
-                  </td>
-                  <td className="px-6 py-4 text-center">
-                    {donor.bloodtype}
-                  </td>
-                  <td className="px-6 py-4 text-center">
-                    {donor.contactno}
-                  </td>
-                  <td className="px-6 py-4 text-center">
-                    {donor.email}
-                  </td>
+                  <td className="px-6 py-4 text-center">{donor.gender}</td>
+                  <td className="px-6 py-4 text-center">{donor.address}</td>
+                  <td className="px-6 py-4 text-center">{donor.bloodtype}</td>
+                  <td className="px-6 py-4 text-center">{donor.contactno}</td>
+                  <td className="px-6 py-4 text-center">{donor.email}</td>
                   <td className="px-6 py-4 text-center">
                     {new Date(donor.preblddntdate).toLocaleDateString()}
                   </td>
@@ -205,33 +200,33 @@ function Viewdonors() {
             </tbody>
           </table>
 
-
           <Modal
-              show={showModal}
-              onClose={() => setShowModal(false)}
-              popup
-              size="md"
-            >
-              <Modal.Header />
-              <Modal.Body>
-                <div className="text-center">
-                  <HiOutlineExclamationCircle className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
-                  <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400">
-                    Are you sure you want to delete this post?
-                  </h3>
-                  <div className="flex justify-center gap-4">
-                    <Button color="red" onClick={() => handleDelete(selectedDonorId)}>
-                      Yes, I'm sure
-                    </Button>
-                    <Button color="gray" onClick={() => setShowModal(false)}>
-                      No, cancel
-                    </Button>
-                  </div>
+            show={showModal}
+            onClose={() => setShowModal(false)}
+            popup
+            size="md"
+          >
+            <Modal.Header />
+            <Modal.Body>
+              <div className="text-center">
+                <HiOutlineExclamationCircle className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
+                <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400">
+                  Are you sure you want to delete this post?
+                </h3>
+                <div className="flex justify-center gap-4">
+                  <Button
+                    color="red"
+                    onClick={() => handleDelete(selectedDonorId)}
+                  >
+                    Yes, I'm sure
+                  </Button>
+                  <Button color="gray" onClick={() => setShowModal(false)}>
+                    No, cancel
+                  </Button>
                 </div>
-              </Modal.Body>
-            </Modal>
-
-
+              </div>
+            </Modal.Body>
+          </Modal>
         </div>
       </div>
       <Footer />

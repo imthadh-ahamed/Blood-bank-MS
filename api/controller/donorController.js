@@ -54,10 +54,10 @@ export const createDonor = async (req, res) => {
   // Check if the user making the request is an admin
   if (!req.user.isAdmin) {
     // If not an admin, return a 403 Forbidden error
-    return next(errorHandler(403, "You are not allowed to create a blog post"));
+    return next(errorHandler(403, "You are not allowed to create a donor details"));
   }
 
-  // Check if the required fields (title and content) are provided in the request body
+  // Check if the required fields are provided in the request body
   const {
     donorid,
     fullname,
