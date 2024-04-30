@@ -105,8 +105,10 @@ function Updatedonors() {
                 name="nic"
                 placeholder="NIC"
                 value={donorData.nic}
-                onChange={handleChange}
+                onChange={(e) => setNic(e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+                pattern="[a-zA-Z0-9]{12}"
+                title="NIC must contain exactly 12 alphanumeric characters"
               />
             </div>
 
@@ -125,15 +127,18 @@ function Updatedonors() {
 
             {/* Gender */}
             <div className="mb-4">
-              <input
-                type="text"
+              <select
                 id="gender"
                 name="gender"
-                placeholder="Gender"
                 value={donorData.gender}
                 onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
-              />
+              >
+                <option value="">Select Gender</option>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+                <option value="O">Other</option>
+              </select>
             </div>
 
             {/* Address */}
@@ -151,15 +156,23 @@ function Updatedonors() {
 
             {/* Blood Type */}
             <div className="mb-4">
-              <input
-                type="text"
-                placeholder="Blood Type"
+              <select
                 id="bloodtype"
                 name="bloodtype"
                 value={donorData.bloodtype}
                 onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
-              />
+              >
+                <option value="">Select Blood Type</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+              </select>
             </div>
 
             {/* Contact No */}
@@ -171,6 +184,8 @@ function Updatedonors() {
                 name="contactno"
                 value={donorData.contactno}
                 onChange={handleChange}
+                pattern="[0-9]{10}"
+                title="Contact number must be exactly 10 digits"
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
               />
             </div>
@@ -184,6 +199,8 @@ function Updatedonors() {
                 name="email"
                 value={donorData.email}
                 onChange={handleChange}
+                pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
+                title="Please enter a valid email address"
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
               />
 

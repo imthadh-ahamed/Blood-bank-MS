@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
-import { Button, Modal } from "flowbite-react";
+import { Alert, Button, Modal } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 function Adddonor() {
@@ -83,7 +83,6 @@ function Adddonor() {
 
           {/* Form for adding donors */}
           <form onSubmit={handleSubmit}>
-
             {/* Donor ID */}
             <div className="mb-4">
               <input
@@ -123,6 +122,8 @@ function Adddonor() {
                 onChange={(e) => setNic(e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
                 required
+                pattern="[a-zA-Z0-9]{12}"
+                title="NIC must contain exactly 12 alphanumeric characters"
               />
             </div>
 
@@ -142,22 +143,25 @@ function Adddonor() {
 
             {/* Gender */}
             <div className="mb-4">
-              <input
-                type="text"
+              <select
                 id="gender"
                 name="gender"
-                placeholder="Gender"
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
                 required
-              />
+              >
+                <option value="">Select Gender</option>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+                <option value="O">Other</option>
+              </select>
             </div>
 
             {/* Address */}
             <div className="mb-4">
               <input
-              type="text"
+                type="text"
                 id="address"
                 name="address"
                 value={address}
@@ -170,22 +174,30 @@ function Adddonor() {
 
             {/* Blood Type */}
             <div className="mb-4">
-              <input
-              type="text"
+              <select
                 id="bloodtype"
                 name="bloodtype"
                 value={bloodtype}
-                placeholder="Blood Type"
                 onChange={(e) => setBloodType(e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
                 required
-              ></input>
+              >
+                <option value="">Select Blood Type</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+              </select>
             </div>
 
             {/* Contact No */}
             <div className="mb-4">
               <input
-              type="text"
+                type="text"
                 id="contactno"
                 name="contactno"
                 value={contactno}
@@ -193,13 +205,15 @@ function Adddonor() {
                 onChange={(e) => setContactNo(e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
                 required
-              ></input>
+                pattern="[0-9]{10}"
+                title="Contact number must be exactly 10 digits"
+              />
             </div>
 
             {/* E-mail */}
             <div className="mb-4">
               <input
-              type="text"
+                type="text"
                 id="email"
                 name="email"
                 value={email}
@@ -207,13 +221,15 @@ function Adddonor() {
                 onChange={(e) => setEmail(e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
                 required
-              ></input>
+                pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
+                title="Please enter a valid email address"
+              />
             </div>
 
             {/* Previous Blood Donate Date */}
             <div className="mb-4">
               <input
-              type="date"
+                type="date"
                 id="preblddntdate"
                 name="preblddntdate"
                 value={preblddntdate}
@@ -234,12 +250,12 @@ function Adddonor() {
               </button>
             </div>
           </form>
+
           {/* Displaying publish error if present */}
           {publishError && (
-            <Alert className="mt-5" color="failure">
-              {publishError}
-            </Alert>
+            <div className="mt-5 text-red-500">{publishError}</div>
           )}
+
           <Modal
             show={showModal}
             onClose={() => setShowModal(false)}
