@@ -24,7 +24,9 @@ function Viewcampaigns() {
       try {
         const response = await fetch("/api/campaign/getCampaigns");
         const data = await response.json();
-        setCampaigns(data.campaigns);
+        // Sort the campaigns array by campaignID in ascending order
+        const sortedCampaigns = data.campaigns.sort((a, b) => a.campaignID - b.campaignID);
+        setCampaigns(sortedCampaigns);
       } catch (error) {
         console.error(error);
         setCampaigns([]); // Set empty campaigns on error

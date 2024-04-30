@@ -20,16 +20,18 @@ function Viewblogs() {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      setIsLoading(true); // Set loading state to true before fetch
+      setIsLoading(true);
       try {
         const response = await fetch("/api/post/getPosts");
         const data = await response.json();
-        setPosts(data.posts);
+        // Sort the posts array by blogid in ascending order
+        const sortedPosts = data.posts.sort((a, b) => a.blogid - b.blogid);
+        setPosts(sortedPosts);
       } catch (error) {
         console.error(error);
-        setPosts([]); // Set empty campaigns on error
+        setPosts([]);
       } finally {
-        setIsLoading(false); // Set loading state to false after fetch
+        setIsLoading(false);
       }
     };
     fetchPosts();
