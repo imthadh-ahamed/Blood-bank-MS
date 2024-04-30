@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { FaUserDoctor } from "react-icons/fa6";
 import { MdCampaign } from "react-icons/md";
 import { LiaBlogSolid } from "react-icons/lia";
-// import LineChart from '../components/Linechart';
+import LineChart from '../components/Linechart';
 
 function Donordashboard() {
   const [campaigns, setCampaigns] = useState([]);
@@ -66,26 +66,26 @@ function Donordashboard() {
       }
     };
 
-    // const fetchMonthlyData = async () => {
-    //   try {
-    //     const response = await fetchMonthlyDonors();
-    //     const data = await response.json();
-    //     if (data.success) {
-    //       setMonthlyDonors(
-    //         data.monthlyDonors.map((item) => ({
-    //           month: item._id, // Extract month value
-    //           count: item.count, // Extract count value
-    //         }))
-    //       );
-    //     } else {
-    //       console.error(data.message);
-    //     }
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // };
+    const fetchMonthlyData = async () => {
+      try {
+        const response = await fetchMonthlyDonors();
+        const data = await response.json();
+        if (data.success) {
+          setMonthlyDonors(
+            data.monthlyDonors.map((item) => ({
+              month: item._id, // Extract month value
+              count: item.count, // Extract count value
+            }))
+          );
+        } else {
+          console.error(data.message);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-    // fetchMonthlyData();
+    fetchMonthlyData();
     fetchCampaigns();
     fetchDonors();
     fetchPosts();
