@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 
-function Viewcampaigns() {
+function Viewdonors() {
   const { currentUser } = useSelector((state) => state.user);
   const [donors, setDonors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -20,21 +20,21 @@ function Viewcampaigns() {
 
   useEffect(() => {
     const fetchDonors = async () => {
-      setIsLoading(true); // Set loading state to true before fetch
+      setIsLoading(true);
       try {
         const response = await fetch("/api/donor/getdonors");
         const data = await response.json();
-        setDonors(data.donors);
+        const sortedDonors = data.donors.sort((a, b) => a.donorid - b.donorid);
+        setDonors(sortedDonors);
       } catch (error) {
         console.error(error);
-        setDonors([]); // Set empty donors on error
+        setDonors([]);
       } finally {
-        setIsLoading(false); // Set loading state to false after fetch
+        setIsLoading(false);
       }
     };
     fetchDonors();
   }, []);
-
   const handleDelete = async (donorid) => {
     setShowModal(false);
     try {
@@ -239,4 +239,4 @@ function Viewcampaigns() {
   );
 }
 
-export default Viewcampaigns;
+export default Viewdonors;
