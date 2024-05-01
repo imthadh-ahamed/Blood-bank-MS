@@ -55,6 +55,10 @@ const donorSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
+    createDate: {
+      type: Date,
+      required: true,
+    },
   },
   { timestamps: true }
 );

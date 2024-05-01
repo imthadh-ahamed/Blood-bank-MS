@@ -75,6 +75,9 @@ function Updatecampaigns() {
           <form onSubmit={handleSubmit}>
             {/* Campaign ID (Read-only) */}
             <div className="mb-4">
+              <label htmlFor="campaignID" className="block text-gray-700">
+                Campaign ID (Read-only)
+              </label>
               <input
                 type="number"
                 id="campaignID"
@@ -89,6 +92,9 @@ function Updatecampaigns() {
 
             {/* Campaign Name */}
             <div className="mb-4">
+              <label htmlFor="campaignName" className="block text-gray-700">
+                Campaign Name
+              </label>
               <input
                 type="text"
                 placeholder="Campaign Name"
@@ -102,6 +108,9 @@ function Updatecampaigns() {
 
             {/* Location */}
             <div className="mb-4">
+              <label htmlFor="location" className="block text-gray-700">
+                Location
+              </label>
               <input
                 type="text"
                 id="location"
@@ -115,6 +124,9 @@ function Updatecampaigns() {
 
             {/* Date */}
             <div className="mb-4">
+              <label htmlFor="date" className="block text-gray-700">
+                Date
+              </label>
               <input
                 type="date"
                 id="date"
@@ -128,6 +140,9 @@ function Updatecampaigns() {
 
             {/* Organization */}
             <div className="mb-4">
+              <label htmlFor="organization" className="block text-gray-700">
+                Organization
+              </label>
               <input
                 type="text"
                 id="organization"
@@ -141,6 +156,9 @@ function Updatecampaigns() {
 
             {/* Requirements */}
             <div className="mb-4">
+              <label htmlFor="requirements" className="block text-gray-700">
+                Requirements
+              </label>
               <textarea
                 type="text"
                 placeholder="Requirements"

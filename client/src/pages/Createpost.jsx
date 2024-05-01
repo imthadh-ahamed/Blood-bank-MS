@@ -52,18 +52,18 @@ function Createpost() {
         </div>
         <div className="flex-grow bg-gray-300 p-5 rounded-xl">
           {/* Heading of the page */}
-          <h1 className="text-center text-3xl font-semibold mb-4">
-            Add Blogs
-          </h1>
+          <h1 className="text-center text-3xl font-semibold mb-4">Add Blogs</h1>
           {/* Form for adding blogs */}
           <form onSubmit={handleSubmit}>
-
-            {/* Blog ID */}
             <div className="mb-4">
+              {/* Blog ID */}
+              <label htmlFor="blogid" className="block text-gray-700">
+                Blog ID
+              </label>
               <input
                 type="number"
                 id="blogid"
-                placeholder="Blog ID"
+                placeholder="1"
                 name="blogid"
                 value={blogid}
                 onChange={(e) => setBlogID(e.target.value)}
@@ -74,10 +74,13 @@ function Createpost() {
 
             {/* User ID */}
             <div className="mb-4">
+              <label htmlFor="userid" className="block text-gray-700">
+                User ID
+              </label>
               <input
                 type="text"
                 id="userid"
-                placeholder="User ID"
+                placeholder="Admin Name"
                 name="userid"
                 value={userid}
                 onChange={(e) => setUserID(e.target.value)}
@@ -88,6 +91,9 @@ function Createpost() {
 
             {/* Title */}
             <div className="mb-4">
+              <label htmlFor="title" className="block text-gray-700">
+                Title
+              </label>
               <input
                 type="text"
                 id="title"
@@ -102,6 +108,9 @@ function Createpost() {
 
             {/* Date */}
             <div className="mb-4">
+              <label htmlFor="date" className="block text-gray-700">
+                Date
+              </label>
               <input
                 type="date"
                 id="date"
@@ -116,8 +125,10 @@ function Createpost() {
 
             {/* Content */}
             <div className="mb-4">
+              <label htmlFor="content" className="block text-gray-700">
+                Content
+              </label>
               <textarea
-                type="text"
                 id="content"
                 name="content"
                 placeholder="Write Something..."
@@ -129,7 +140,7 @@ function Createpost() {
               />
             </div>
 
-            {/* Submit button */}
+            {/* Create Button */}
             <div className="flex justify-center">
               <button
                 type="submit"

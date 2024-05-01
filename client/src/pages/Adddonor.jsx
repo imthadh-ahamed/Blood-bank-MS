@@ -18,6 +18,7 @@ function Adddonor() {
   const [contactno, setContactNo] = useState("");
   const [email, setEmail] = useState("");
   const [preblddntdate, setpreblddntdate] = useState("");
+  const [createDate, setCreatedate] = useState("");
   const [publishError, setPublishError] = useState(null);
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
@@ -41,6 +42,7 @@ function Adddonor() {
           contactno,
           email,
           preblddntdate,
+          createDate,
         }), // Sending form data as JSON
       });
 
@@ -65,6 +67,7 @@ function Adddonor() {
       setContactNo("");
       setEmail("");
       setpreblddntdate("");
+      setCreatedate("");
     }
   };
 
@@ -85,10 +88,13 @@ function Adddonor() {
           <form onSubmit={handleSubmit}>
             {/* Donor ID */}
             <div className="mb-4">
+              <label htmlFor="donorid" className="block text-gray-700">
+                Donor ID
+              </label>
               <input
                 type="number"
                 id="donorid"
-                placeholder="Donor ID"
+                placeholder="1"
                 name="donorid"
                 value={donorid}
                 onChange={(e) => setDonorID(e.target.value)}
@@ -99,10 +105,13 @@ function Adddonor() {
 
             {/* Full Name */}
             <div className="mb-4">
+              <label htmlFor="fullname" className="block text-gray-700">
+                Full Name
+              </label>
               <input
                 type="text"
                 id="fullname"
-                placeholder="Full Name"
+                placeholder="James Smith"
                 name="fullname"
                 value={fullname}
                 onChange={(e) => setFullName(e.target.value)}
@@ -113,10 +122,13 @@ function Adddonor() {
 
             {/* NIC */}
             <div className="mb-4">
+              <label htmlFor="nic" className="block text-gray-700">
+                NIC
+              </label>
               <input
                 type="text"
                 id="nic"
-                placeholder="NIC"
+                placeholder="000000000000 or 0000000000V"
                 name="nic"
                 value={nic}
                 onChange={(e) => setNic(e.target.value)}
@@ -129,6 +141,9 @@ function Adddonor() {
 
             {/* Date of Birth */}
             <div className="mb-4">
+              <label htmlFor="dateofbirth" className="block text-gray-700">
+                Date of Birth
+              </label>
               <input
                 type="date"
                 id="dateofbirth"
@@ -143,6 +158,9 @@ function Adddonor() {
 
             {/* Gender */}
             <div className="mb-4">
+              <label htmlFor="gender" className="block text-gray-700">
+                Gender
+              </label>
               <select
                 id="gender"
                 name="gender"
@@ -160,20 +178,26 @@ function Adddonor() {
 
             {/* Address */}
             <div className="mb-4">
+              <label htmlFor="address" className="block text-gray-700">
+                Address
+              </label>
               <input
                 type="text"
                 id="address"
                 name="address"
                 value={address}
-                placeholder="Address"
+                placeholder="12A, Main st, Colombo"
                 onChange={(e) => setAddress(e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
                 required
-              ></input>
+              />
             </div>
 
             {/* Blood Type */}
             <div className="mb-4">
+              <label htmlFor="bloodtype" className="block text-gray-700">
+                Blood Type
+              </label>
               <select
                 id="bloodtype"
                 name="bloodtype"
@@ -196,12 +220,15 @@ function Adddonor() {
 
             {/* Contact No */}
             <div className="mb-4">
+              <label htmlFor="contactno" className="block text-gray-700">
+                Contact No
+              </label>
               <input
                 type="text"
                 id="contactno"
                 name="contactno"
                 value={contactno}
-                placeholder="Contact No"
+                placeholder="07xxxxxxxx"
                 onChange={(e) => setContactNo(e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
                 required
@@ -212,12 +239,15 @@ function Adddonor() {
 
             {/* E-mail */}
             <div className="mb-4">
+              <label htmlFor="email" className="block text-gray-700">
+                E-mail
+              </label>
               <input
                 type="text"
                 id="email"
                 name="email"
                 value={email}
-                placeholder="E-mail"
+                placeholder="jamessmith@gmail.com"
                 onChange={(e) => setEmail(e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
                 required
@@ -228,6 +258,9 @@ function Adddonor() {
 
             {/* Previous Blood Donate Date */}
             <div className="mb-4">
+              <label htmlFor="preblddntdate" className="block text-gray-700">
+                Previous Blood Donate Date
+              </label>
               <input
                 type="date"
                 id="preblddntdate"
@@ -237,7 +270,24 @@ function Adddonor() {
                 onChange={(e) => setpreblddntdate(e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
                 required
-              ></input>
+              />
+            </div>
+
+            {/* Create Date */}
+            <div className="mb-4">
+              <label htmlFor="createDate" className="block text-gray-700">
+                Create Date
+              </label>
+              <input
+                type="date"
+                id="createDate"
+                name="createDate"
+                value={createDate}
+                placeholder="Create Date"
+                onChange={(e) => setCreatedate(e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+                required
+              />
             </div>
 
             {/* Submit button */}

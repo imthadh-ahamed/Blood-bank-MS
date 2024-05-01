@@ -69,9 +69,13 @@ function Updatedonors() {
             Update Donor
           </h1>
 
+          {/* Form for updating donors */}
           <form onSubmit={handleSubmit}>
             {/* Donor ID (Read-only) */}
             <div className="mb-4">
+              <label htmlFor="donorid" className="block text-gray-700">
+                Donor ID
+              </label>
               <input
                 type="number"
                 id="donorid"
@@ -86,6 +90,9 @@ function Updatedonors() {
 
             {/* Full Name */}
             <div className="mb-4">
+              <label htmlFor="fullname" className="block text-gray-700">
+                Full Name
+              </label>
               <input
                 type="text"
                 placeholder="Full Name"
@@ -99,13 +106,16 @@ function Updatedonors() {
 
             {/* NIC */}
             <div className="mb-4">
+              <label htmlFor="nic" className="block text-gray-700">
+                NIC
+              </label>
               <input
                 type="text"
                 id="nic"
                 name="nic"
                 placeholder="NIC"
                 value={donorData.nic}
-                onChange={(e) => setNic(e.target.value)}
+                onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
                 pattern="[a-zA-Z0-9]{12}"
                 title="NIC must contain exactly 12 alphanumeric characters"
@@ -114,6 +124,9 @@ function Updatedonors() {
 
             {/* Date of Birth */}
             <div className="mb-4">
+              <label htmlFor="dateofbirth" className="block text-gray-700">
+                Date of Birth
+              </label>
               <input
                 type="date"
                 id="dateofbirth"
@@ -127,6 +140,9 @@ function Updatedonors() {
 
             {/* Gender */}
             <div className="mb-4">
+              <label htmlFor="gender" className="block text-gray-700">
+                Gender
+              </label>
               <select
                 id="gender"
                 name="gender"
@@ -143,6 +159,9 @@ function Updatedonors() {
 
             {/* Address */}
             <div className="mb-4">
+              <label htmlFor="address" className="block text-gray-700">
+                Address
+              </label>
               <input
                 type="text"
                 placeholder="Address"
@@ -156,6 +175,9 @@ function Updatedonors() {
 
             {/* Blood Type */}
             <div className="mb-4">
+              <label htmlFor="bloodtype" className="block text-gray-700">
+                Blood Type
+              </label>
               <select
                 id="bloodtype"
                 name="bloodtype"
@@ -177,6 +199,9 @@ function Updatedonors() {
 
             {/* Contact No */}
             <div className="mb-4">
+              <label htmlFor="contactno" className="block text-gray-700">
+                Contact No
+              </label>
               <input
                 type="text"
                 placeholder="Contact No"
@@ -192,6 +217,9 @@ function Updatedonors() {
 
             {/* E-mail */}
             <div className="mb-4">
+              <label htmlFor="email" className="block text-gray-700">
+                E-mail
+              </label>
               <input
                 type="text"
                 placeholder="E-mail"
@@ -203,16 +231,35 @@ function Updatedonors() {
                 title="Please enter a valid email address"
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
               />
-
-              {/* Previous Blodd Donate */}
             </div>
+
+            {/* Previous Blood Donate Date */}
             <div className="mb-4">
+              <label htmlFor="preblddntdate" className="block text-gray-700">
+                Previous Blood Donate Date
+              </label>
               <input
                 type="date"
                 placeholder="Previous Blood Donate Date"
-                id="preblddntdate   1"
+                id="preblddntdate"
                 name="preblddntdate"
                 value={donorData.preblddntdate}
+                onChange={handleChange}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+              />
+            </div>
+
+            {/* Create Date */}
+            <div className="mb-4">
+              <label htmlFor="createDate" className="block text-gray-700">
+                Create Date
+              </label>
+              <input
+                type="date"
+                placeholder="Create Date"
+                id="createDate"
+                name="createDate"
+                value={donorData.createDate}
                 onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
               />
