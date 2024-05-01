@@ -1,44 +1,63 @@
-import React, { useEffect } from 'react';
-import { Chart } from 'chart.js';
+import React, { Component } from 'react';
+import CanvasJSReact from '@canvasjs/react-charts';
 
-function LineChart({ monthlyDonors }) {
-  const chartRef = React.createRef();
+const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-  useEffect(() => {
-    const ctx = chartRef.current.getContext('2d');
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: monthlyDonors.map((item) => item.month), // Extract month labels
-        datasets: [
-          {
-            label: 'Monthly Donor Demand',
-            data: monthlyDonors.map((item) => item.count), // Extract donor counts
-            backgroundColor: 'rgba(54, 162, 235, 0.2)', // Light blue background
-            borderColor: 'rgba(54, 162, 235, 1)', // Blue border
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        scales: {
-          yAxes: [
-            {
-              ticks: {
-                beginAtZero: true, // Start y-axis at 0
-              },
-            },
-          ],
-        },
-      },
-    });
-  }, [monthlyDonors]); // Update chart when monthlyDonors change
+class Linechart extends Component {
+	render() {
+		const options = {
+			animationEnabled: true,
+			exportEnabled: true,
+			theme: "light2", // "light1", "dark1", "dark2"
+			title:{
+				text: "Monthly Donor Demand"
+			},
+			axisY: {
+				title: "Donors",
+				suffix: "%"
+			},
+			axisX: {
+				title: "Week of Year",
+				prefix: "W",
+				interval: 2
+			},
+			data: [{
+				type: "line",
+				toolTipContent: "Week {x}: {y}%",
+				dataPoints: [
+					{ x: 1, y: 64 },
+					{ x: 2, y: 61 },
+					{ x: 3, y: 64 },
+					{ x: 4, y: 62 },
+					{ x: 5, y: 64 },
+					{ x: 6, y: 60 },
+					{ x: 7, y: 58 },
+					{ x: 8, y: 59 },
+					{ x: 9, y: 53 },
+					{ x: 10, y: 54 },
+					{ x: 11, y: 61 },
+					{ x: 12, y: 60 },
+					{ x: 13, y: 55 },
+					{ x: 14, y: 60 },
+					{ x: 15, y: 56 },
+					{ x: 16, y: 60 },
+					{ x: 17, y: 59.5 },
+					{ x: 18, y: 63 },
+					{ x: 19, y: 58 },
+					{ x: 20, y: 54 },
+					{ x: 21, y: 59 },
+					{ x: 22, y: 64 },
+					{ x: 23, y: 59 }
+				]
+			}]
+		};
 
-  return (
-    <div>
-      <canvas ref={chartRef} width="400" height="200"></canvas>
-    </div>
-  );
+		return (
+			<div>
+				<CanvasJSChart options={options} />
+			</div>
+		);
+	}
 }
 
-export default LineChart;
+export default Linechart;
