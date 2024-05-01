@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Linechart from "../components/Linechart";
 import { Link } from "react-router-dom";
 import { FaUserDoctor } from "react-icons/fa6";
 import { MdCampaign } from "react-icons/md";
@@ -14,6 +15,7 @@ function Donordashboard() {
   const [totalCampaigns, setTotalCampaigns] = useState(0);
   const [totalDonors, setTotalDonors] = useState(0);
   const [totalPosts, setTotalPosts] = useState(0);
+  const [monthlyDonors, setMonthlyDonors] = useState([]);
 
   useEffect(() => {
     const fetchCampaigns = async () => {
@@ -64,11 +66,29 @@ function Donordashboard() {
       }
     };
 
-    
+    const fetchMonthlyDonors = async () => {
+      try {
+        const response = await fetch("/api/donor/getMonthlyDonors");
+        const data = await response.json();
+
+        if (data.success) {
+          const processedData = data.donorData.map((item) => ({
+            label: item.month, // Extract month as label
+            data: item.count, // Extract count as data point
+          }));
+          setMonthlyDonors(processedData);
+        } else {
+          console.error(data.message);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
     fetchCampaigns();
     fetchDonors();
     fetchPosts();
+    fetchMonthlyDonors();
   }, []);
 
   return (
@@ -144,8 +164,9 @@ function Donordashboard() {
           <div className="text-center">
             <div>
               <h1> Monthly Donor Demand </h1>
-              <p> Want to add the line chart</p>
-              {/* LineChart */}
+              {/* <Linechart /> */}
+
+              <Linechart />
             </div>
           </div>
         </div>
