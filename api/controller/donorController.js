@@ -69,6 +69,7 @@ export const createDonor = async (req, res) => {
     contactno,
     email,
     preblddntdate,
+    createDate,
   } = req.body;
 
   if (
@@ -81,7 +82,8 @@ export const createDonor = async (req, res) => {
     !bloodtype ||
     !contactno ||
     !email ||
-    !preblddntdate
+    !preblddntdate ||
+    !createDate
   ) {
     return res
       .status(400)
@@ -173,24 +175,44 @@ export const deleteDonor = async (req, res) => {
 };
 
 
+// export const getMonthlyDonors = async (req, res) => {
+//   try {
+//     const monthlyDonors = await Donor.aggregate([
+//       {
+//         $group: {
+//           _id: { $month: "$createdAt" }, // Group by month of creation
+//           count: { $sum: 1 }, // Count the number of donors in each month
+//         },
+//       },
+//       { $sort: { _id: 1 } }, // Sort by month (ascending order)
+//     ]);
+
+//     return res.status(200).json({ success: true, monthlyDonors });
+//   } catch (error) {
+//     return res.status(500).json({
+//       success: false,
+//       message: "Internal server error",
+//       error: error.message,
+//     });
+//   }
+// };
+
 export const getMonthlyDonors = async (req, res) => {
   try {
-    const monthlyDonors = await Donor.aggregate([
+    // Group donors by month using aggregation framework
+    const donorData = await Donor.aggregate([
       {
         $group: {
-          _id: { $month: "$createdAt" }, // Group by month of creation
+          _id: { $month: "$preblddntdate" }, // Group by month of preblddntdate
           count: { $sum: 1 }, // Count the number of donors in each month
         },
       },
-      { $sort: { _id: 1 } }, // Sort by month (ascending order)
+      { $sort: { _id: 1 } }, // Sort by month (ascending)
     ]);
 
-    return res.status(200).json({ success: true, monthlyDonors });
+    return res.status(200).json({ success: true, donorData });
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "Internal server error",
-      error: error.message,
-    });
+    // Handle errors
+    return res.status(500).json({ success: false, message: error.message });
   }
 };

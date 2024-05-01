@@ -65,10 +65,13 @@ function Createcampaign() {
           <form onSubmit={handleSubmit}>
             {/* Campaign ID */}
             <div className="mb-4">
+              <label htmlFor="campaignID" className="block text-gray-700">
+                Campaign ID
+              </label>
               <input
                 type="number"
                 id="campaignID"
-                placeholder="Campaign ID"
+                placeholder="1"
                 name="campaignID"
                 value={campaignID}
                 onChange={(e) => setCampaignID(e.target.value)}
@@ -79,10 +82,13 @@ function Createcampaign() {
 
             {/* Campaign Name */}
             <div className="mb-4">
+              <label htmlFor="campaignName" className="block text-gray-700">
+                Campaign Name
+              </label>
               <input
                 type="text"
                 id="campaignName"
-                placeholder="Campaign Name"
+                placeholder="Save Life"
                 name="campaignName"
                 value={campaignName}
                 onChange={(e) => setCampaignName(e.target.value)}
@@ -93,10 +99,13 @@ function Createcampaign() {
 
             {/* Location */}
             <div className="mb-4">
+              <label htmlFor="location" className="block text-gray-700">
+                Location
+              </label>
               <input
                 type="text"
                 id="location"
-                placeholder="Location"
+                placeholder="Galle Face, Colombo"
                 name="location"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
@@ -107,6 +116,9 @@ function Createcampaign() {
 
             {/* Date */}
             <div className="mb-4">
+              <label htmlFor="date" className="block text-gray-700">
+                Date
+              </label>
               <input
                 type="date"
                 id="date"
@@ -121,11 +133,14 @@ function Createcampaign() {
 
             {/* Organization */}
             <div className="mb-4">
+              <label htmlFor="organization" className="block text-gray-700">
+                Organization
+              </label>
               <input
                 type="text"
                 id="organization"
                 name="organization"
-                placeholder="Organization"
+                placeholder="LEO Club"
                 value={organization}
                 onChange={(e) => setOrganization(e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
@@ -135,11 +150,14 @@ function Createcampaign() {
 
             {/* Requirements */}
             <div className="mb-4">
+              <label htmlFor="requirements" className="block text-gray-700">
+                Requirements
+              </label>
               <textarea
                 id="requirements"
                 name="requirements"
                 value={requirements}
-                placeholder="Requirements"
+                placeholder="Write some requirements..."
                 onChange={(e) => setRequirements(e.target.value)}
                 rows="5"
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"

@@ -38,14 +38,11 @@ function Updateposts() {
     e.preventDefault();
 
     try {
-      const response = await fetch(
-        `/api/post/updatePost/${blogid}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(postData),
-        }
-      );
+      const response = await fetch(`/api/post/updatePost/${blogid}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(postData),
+      });
 
       const data = await response.json();
 
@@ -76,10 +73,12 @@ function Updateposts() {
 
             {/* Post ID (Read-only) */}
             <div className="mb-4">
+              <label htmlFor="blogid" className="block text-gray-700">
+                Blog ID
+              </label>
               <input
                 type="number"
                 id="blogid"
-                placeholder="Blog ID (Read-only)"
                 name="blogid"
                 value={postData.blogid}
                 disabled
@@ -90,9 +89,11 @@ function Updateposts() {
 
             {/* User ID */}
             <div className="mb-4">
+              <label htmlFor="userid" className="block text-gray-700">
+                User ID
+              </label>
               <input
                 type="text"
-                placeholder="User ID"
                 id="userid"
                 name="userid"
                 value={postData.userid}
@@ -103,11 +104,13 @@ function Updateposts() {
 
             {/* Title */}
             <div className="mb-4">
+              <label htmlFor="title" className="block text-gray-700">
+                Title
+              </label>
               <input
                 type="text"
                 id="title"
                 name="title"
-                placeholder="Title"
                 value={postData.title}
                 onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
@@ -116,10 +119,12 @@ function Updateposts() {
 
             {/* Date */}
             <div className="mb-4">
+              <label htmlFor="date" className="block text-gray-700">
+                Date
+              </label>
               <input
                 type="date"
                 id="date"
-                placeholder="Date"
                 name="date"
                 value={postData.date}
                 onChange={handleChange}
@@ -129,11 +134,13 @@ function Updateposts() {
 
             {/* Content */}
             <div className="mb-4">
+              <label htmlFor="content" className="block text-gray-700">
+                Content
+              </label>
               <textarea
                 type="text"
                 id="content"
                 name="content"
-                placeholder="Write Something..."
                 value={postData.content}
                 onChange={handleChange}
                 rows={10}
