@@ -6,10 +6,9 @@ import { Link } from "react-router-dom";
 import { FaUserDoctor } from "react-icons/fa6";
 import { MdCampaign } from "react-icons/md";
 import { LiaBlogSolid } from "react-icons/lia";
-import CanvasJSReact from '@canvasjs/react-charts';
+import CanvasJSReact from "@canvasjs/react-charts";
 
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
-
 
 function Donordashboard() {
   const [campaigns, setCampaigns] = useState([]);
@@ -19,7 +18,6 @@ function Donordashboard() {
   const [totalDonors, setTotalDonors] = useState(0);
   const [totalPosts, setTotalPosts] = useState(0);
   const [monthlyDonors, setMonthlyDonors] = useState([]);
-
 
   useEffect(() => {
     const fetchCampaigns = async () => {
@@ -91,29 +89,30 @@ function Donordashboard() {
     fetchMonthlyDonors();
   }, []);
 
-
   const lineChartOptions = {
     animationEnabled: true,
     exportEnabled: true,
     theme: "light2",
     title: {
-      text: "Monthly Donor Demand"
+      text: "Monthly Donor Demand",
     },
     axisY: {
-      title: "Donors"
+      title: "Donors",
     },
     axisX: {
       title: "Months of Year",
-      interval: 1
+      interval: 1,
     },
-    data: [{
-      type: "line",
-      toolTipContent: "Month {x}: {y}",
-      dataPoints: monthlyDonors.map((monthlyDonor, index) => ({
-        x: index + 1,
-        y: monthlyDonor.count
-      }))
-    }]
+    data: [
+      {
+        type: "line",
+        toolTipContent: "Month {x}: {y}",
+        dataPoints: monthlyDonors.map((monthlyDonor, index) => ({
+          x: index + 1,
+          y: monthlyDonor.count,
+        })),
+      },
+    ],
   };
 
   return (
@@ -123,6 +122,7 @@ function Donordashboard() {
         <div>
           <Sidebar />
         </div>
+
         <div className="flex-grow bg-gray-300 p-5 rounded-xl">
           <div className="flex justify-between flex-wrap">
             {/* Donor Counts */}
@@ -186,8 +186,8 @@ function Donordashboard() {
             </div>
           </div>
           {/* Line Chart */}
-          <div className="text-center">
-            <div className="mt-12">
+          <div className="bg-gray-400 rounded-xl">
+            <div className="p-4">
               <CanvasJSChart options={lineChartOptions} />
             </div>
           </div>
