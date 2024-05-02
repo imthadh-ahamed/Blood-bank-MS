@@ -175,3 +175,37 @@ export const deleteDonor = async (req, res) => {
 };
 
 
+// @desc    Get number of donors for each month
+// @route   GET /api/donor/getMonthlyDonors
+// @access  Public (consider adding authentication if needed)
+export const getMonthlyDonors = async (req, res) => {
+  try {
+    // You'll need to modify this logic based on your database schema and desired output format
+    // Here's an example using aggregation pipeline (assuming a 'donationDate' field):
+    const pipeline = [
+      {
+        $project: {
+          month: { $month: "$createDate" }, // Extract month from donationDate
+        },
+      },
+      {
+        $group: {
+          _id: "$month", // Group by month
+          count: { $sum: 1 }, // Count documents in each month group
+        },
+      },
+    ];
+
+    const monthlyDonors = await Donor.aggregate(pipeline);
+
+    return res.status(200).json({ success: true, monthlyDonors });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({
+        success: false,
+        message: "Internal server error",
+        error: error.message,
+      });
+  }
+};
