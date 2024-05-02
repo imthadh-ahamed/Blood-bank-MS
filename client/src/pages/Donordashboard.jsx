@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Component } from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import Linechart from "../components/Linechart";
 import { Link } from "react-router-dom";
 import { FaUserDoctor } from "react-icons/fa6";
 import { MdCampaign } from "react-icons/md";
 import { LiaBlogSolid } from "react-icons/lia";
+import CanvasJSReact from '@canvasjs/react-charts';
+
+const CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
 
 function Donordashboard() {
   const [campaigns, setCampaigns] = useState([]);
@@ -16,6 +19,7 @@ function Donordashboard() {
   const [totalDonors, setTotalDonors] = useState(0);
   const [totalPosts, setTotalPosts] = useState(0);
   const [monthlyDonors, setMonthlyDonors] = useState([]);
+
 
   useEffect(() => {
     const fetchCampaigns = async () => {
@@ -68,15 +72,11 @@ function Donordashboard() {
 
     const fetchMonthlyDonors = async () => {
       try {
-        const response = await fetch("/api/donor/getMonthlyDonors");
+        const response = await fetch("/api/donor/getdonorsMonthly");
         const data = await response.json();
-
         if (data.success) {
-          const processedData = data.donorData.map((item) => ({
-            label: item.month, // Extract month as label
-            data: item.count, // Extract count as data point
-          }));
-          setMonthlyDonors(processedData);
+          // Set the monthly donor data
+          setMonthlyDonors(data.monthlyDonors);
         } else {
           console.error(data.message);
         }
@@ -90,6 +90,31 @@ function Donordashboard() {
     fetchPosts();
     fetchMonthlyDonors();
   }, []);
+
+
+  const lineChartOptions = {
+    animationEnabled: true,
+    exportEnabled: true,
+    theme: "light2",
+    title: {
+      text: "Monthly Donor Demand"
+    },
+    axisY: {
+      title: "Donors"
+    },
+    axisX: {
+      title: "Months of Year",
+      interval: 1
+    },
+    data: [{
+      type: "line",
+      toolTipContent: "Month {x}: {y}",
+      dataPoints: monthlyDonors.map((monthlyDonor, index) => ({
+        x: index + 1,
+        y: monthlyDonor.count
+      }))
+    }]
+  };
 
   return (
     <div>
@@ -163,10 +188,7 @@ function Donordashboard() {
           {/* Line Chart */}
           <div className="text-center">
             <div>
-              <h1> Monthly Donor Demand </h1>
-              {/* <Linechart /> */}
-
-              <Linechart />
+              <CanvasJSChart options={lineChartOptions} />
             </div>
           </div>
         </div>

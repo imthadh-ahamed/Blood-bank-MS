@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-// Define a Mongoose schema for the blog post
+// Define a Mongoose schema for the donor
 const donorSchema = new mongoose.Schema(
   {
     // Define fields for the user schema
