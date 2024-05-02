@@ -187,7 +187,7 @@ function Donordashboard() {
           </div>
           {/* Line Chart */}
           <div className="text-center">
-            <div>
+            <div className="mt-12">
               <CanvasJSChart options={lineChartOptions} />
             </div>
           </div>
