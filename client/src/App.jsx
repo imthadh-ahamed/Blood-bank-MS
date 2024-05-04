@@ -17,6 +17,7 @@ import Adddonor from './pages/Adddonor'
 import CreateCampaign from './pages/Createcampaign'
 import Updatecampaigns from './pages/Updatecampaigns'
 import Updatedonors from './pages/Updatedonor'
+import MainDashboard from './pages/UserManagement/MainDashboard'
 
 // App function definition
 function App() {
@@ -35,6 +36,7 @@ function App() {
       <Route path="/viewdonors" element={<Viewdonors />} />
       <Route path="/viewcampaigns" element={<Viewcampaigns />} />
       <Route path="/logoutpop" element={<Logout />} />
+      <Route path="/maindashboard" element={<MainDashboard />} />
       </Route>
 
       <Route element={<OnlyAdmin />} >
