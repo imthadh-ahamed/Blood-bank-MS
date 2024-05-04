@@ -39,7 +39,7 @@ function Signin() {
       // Check if request was successful
       if (res.ok) {
         dispatch(signInSuccess(data));
-        navigate("/donordashboard"); // Navigate to home page
+        navigate("/maindashboard"); // Navigate to home page
       }
     } catch (error) {
       // Handle duplicate key error

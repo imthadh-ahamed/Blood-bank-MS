@@ -17,7 +17,7 @@ function Sidebar({children}) {
     // Array of menu items with paths, names, and corresponding icons
     const menuItem = [
         {
-            path: "/dashboard",
+            path: "/maindashboard",
             name: "Dashboard",
             icon: <AiFillDashboard />
         },
@@ -53,7 +53,7 @@ function Sidebar({children}) {
         },
     ]
   return (
-    <div className='container'>
+    <div className='container bg-gray-200'>
          {/* Sidebar container */}
         <div className="sidebar mr-2" style={{width: isOpen ? "200px" : "50px"}}>
             {/* Top section of the sidebar */}
