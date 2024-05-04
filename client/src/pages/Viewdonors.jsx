@@ -13,11 +13,10 @@ function Viewdonors() {
   const [donors, setDonors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState("");
+  const [input, setInput] = useState("");
   const [filteredDonors, setFilteredDonors] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedDonorId, setSelectedDonorId] = useState(null);
-  const apiUrl = "https://dummyjson.com/products/search?q=";
 
   useEffect(() => {
     const fetchDonors = async () => {
@@ -54,21 +53,31 @@ function Viewdonors() {
     }
   };
 
-  const handleChange = (event) => {
-    setSearchTerm(event.target.value);
-    const filteredData = donors.filter((donor) =>
-      donor.donorid.toString().includes(event.target.value)
-    );
-    setFilteredDonors(filteredData);
+  const handleChange = (value) => {
+    setInput(value);
+    fetchData(value);
   };
 
-  const onSearch = (e) => {
-    const text = e.target.value;
-    setSearchTerm(text);
-    const filtered = donors.filter((donor) =>
-      donor.fullname.toLowerCase().includes(text.toLowerCase())
-    );
-    setFilteredDonors(filtered);
+  const fetchData = (value) => {
+    fetch("/api/donor/getdonors")
+      .then((response) => response.json())
+      .then((data) => {
+        const sortedDonors = data.donors.sort((a, b) => a.donorid - b.donorid);
+        setDonors(sortedDonors); // Update donors state with all donors
+
+        const filteredDonors = sortedDonors.filter(
+          (donor) =>
+            donor.fullname.toLowerCase().includes(value.toLowerCase()) ||
+            donor.address.toLowerCase().includes(value.toLowerCase()) ||
+            donor.bloodtype.toLowerCase().includes(value.toLowerCase())
+        );
+        setFilteredDonors(filteredDonors); // Update filteredDonors state with filtered donors
+      })
+      .catch((error) => {
+        console.error("Error fetching donors:", error);
+        setDonors([]); // Clear donors state in case of error
+        setFilteredDonors([]); // Clear filteredDonors state in case of error
+      });
   };
 
   return (
@@ -89,8 +98,8 @@ function Viewdonors() {
               <input
                 type="text"
                 placeholder="Search Donors"
-                value={searchTerm}
-                onChange={onSearch}
+                value={input}
+                onChange={(e) => handleChange(e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
               />
             </div>
@@ -99,12 +108,31 @@ function Viewdonors() {
             {currentUser.isAdmin && (
               <div>
                 <Link to="/create-donor">
-                  <Button
+                  <button
                     type="submit"
-                    className="border-2 border-customRed rounded-xl font-semibold px-2 py-1 mt-4 mb-4 bg-customRed text-white hover:bg-red-600 transition-colors duration-300"
+                    className="relative w-36 h-10 cursor-pointer flex items-center border border-customRed bg-customRed group hover:bg-red-600 active:bg-red-600 active:border-red-600 rounded-xl"
                   >
-                    Add Donor
-                  </Button>
+                    <span class="text-white font-semibold mx-auto transform group-hover:translate-x-20 transition-all duration-300">
+                      Add
+                    </span>
+                    <span class="absolute right-0 h-full w-10 rounded-lg bg-customRed flex items-center justify-center transform group-hover:translate-x-0 group-hover:w-full transition-all duration-300">
+                      <svg
+                        class="svg w-8 text-white"
+                        fill="none"
+                        height="24"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <line x1="12" x2="12" y1="5" y2="19"></line>
+                        <line x1="5" x2="19" y1="12" y2="12"></line>
+                      </svg>
+                    </span>
+                  </button>
                 </Link>
               </div>
             )}
@@ -180,27 +208,57 @@ function Viewdonors() {
                     {new Date(donor.preblddntdate).toLocaleDateString()}
                   </td>
                   {currentUser.isAdmin && (
-                  <td className="px-6 py-4 text-center">
-                    {new Date(donor.createDate).toLocaleDateString()}
-                  </td>
-                  )}
-                  {currentUser.isAdmin && (
                     <td className="px-6 py-4 text-center">
+                      {new Date(donor.createDate).toLocaleDateString()}
+                    </td>
+                  )}
+
+                  {currentUser.isAdmin && (
+                    <td className="px-6 py-4 text-center flex flex-col gap-3">
                       <button
-                        className="px-2 py-1 text-red-500 hover:text-red-700 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md"
+                        className="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110"
                         onClick={() => {
                           setSelectedDonorId(donor.donorid);
                           setShowModal(true);
                         }}
                       >
+                        <svg
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          className="h-5 w-5 mr-2"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                            strokeWidth="2"
+                            strokeLinejoin="round"
+                            strokeLinecap="round"
+                          ></path>
+                        </svg>
                         Delete
                       </button>
+
                       <button
-                        className="px-2 py-1 text-blue-500 hover:text-blue-700 focus:outline-none focus:ring focus:ring-blue-200 focus:ring-opacity-50 rounded-md ml-2"
+                        className="inline-flex items-center px-4 py-2 bg-blue-600 transition ease-in-out delay-75 hover:bg-blue-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110"
                         onClick={() =>
                           navigate(`/update-donor/${donor.donorid}`)
                         }
                       >
+                        <svg
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          className="h-5 w-5 mr-2"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M15 3H5a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2zM3 7h1m-1 4h1m-1 4h1m16-8v8m-4-8v8m-4 0h4m-8 0H7"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          ></path>
+                        </svg>
                         Edit
                       </button>
                     </td>
